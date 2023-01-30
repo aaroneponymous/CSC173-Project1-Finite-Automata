@@ -1,0 +1,52 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/mnt/c/Aaron's Folder/173Projects/Project2/BitSet.h
+stdbool.h
+-
+
+/mnt/c/Aaron's Folder/173Projects/Project2/IntHashSet.h
+stdbool.h
+-
+
+/mnt/c/Aaron's Folder/173Projects/Project2/Set.h
+IntHashSet.h
+/mnt/c/Aaron's Folder/173Projects/Project2/IntHashSet.h
+BitSet.h
+/mnt/c/Aaron's Folder/173Projects/Project2/BitSet.h
+
+/mnt/c/Aaron's Folder/173Projects/Project2/dfa.h
+stdbool.h
+-
+
+/mnt/c/Aaron's Folder/173Projects/Project2/makeDfaNfa.c
+stdio.h
+-
+stdlib.h
+-
+stdbool.h
+-
+string.h
+-
+makeDfaNfa.h
+/mnt/c/Aaron's Folder/173Projects/Project2/makeDfaNfa.h
+dfa.h
+/mnt/c/Aaron's Folder/173Projects/Project2/dfa.h
+
+/mnt/c/Aaron's Folder/173Projects/Project2/makeDfaNfa.h
+dfa.h
+/mnt/c/Aaron's Folder/173Projects/Project2/dfa.h
+nfa.h
+/mnt/c/Aaron's Folder/173Projects/Project2/nfa.h
+
+/mnt/c/Aaron's Folder/173Projects/Project2/nfa.h
+stdbool.h
+-
+Set.h
+/mnt/c/Aaron's Folder/173Projects/Project2/Set.h
+

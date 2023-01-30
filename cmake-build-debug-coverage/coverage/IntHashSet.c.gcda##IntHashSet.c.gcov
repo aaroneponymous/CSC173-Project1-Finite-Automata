@@ -1,0 +1,563 @@
+        -:    0:Source:/mnt/c/Aaron's Folder/173Projects/Project2/IntHashSet.c
+        -:    0:Graph:/mnt/c/Aaron's Folder/173Projects/Project2/cmake-build-debug-coverage/CMakeFiles/Project2.dir/IntHashSet.c.gcno
+        -:    0:Data:/mnt/c/Aaron's Folder/173Projects/Project2/cmake-build-debug-coverage/CMakeFiles/Project2.dir/IntHashSet.c.gcda
+        -:    0:Runs:1
+        -:    1:/**
+        -:    2: * IntHashSet.c
+        -:    3: * Author: George Ferguson
+        -:    4: *
+        -:    5: * Hashtable implementation of a set of ints.
+        -:    6: * @see FOCS pp. 360-363, 415
+        -:    7: *
+        -:    8: * This is a weak example of a set implementation.
+        -:    9: * It doesn't do anything smart about set operations other
+        -:   10: * than making it easy to add an element (int) to the set.
+        -:   11: * And it isn't very smart about that either, to be honest.
+        -:   12: *
+        -:   13: * YOU could probably do better...
+        -:   14: */
+        -:   15:#include <stdlib.h>
+        -:   16:#include <stdbool.h>
+        -:   17:#include <stdio.h>
+        -:   18:#include <string.h> // used by toString()
+        -:   19:
+        -:   20:#include "IntHashSet.h"
+        -:   21:
+        -:   22:struct Node {
+        -:   23:	int element;
+        -:   24:	struct Node* next;
+        -:   25:};
+        -:   26:typedef struct Node Node;
+        -:   27:
+        -:   28:struct IntHashSet {
+        -:   29:	int size;
+        -:   30:	Node** buckets; // Array of pointers to first node in list for bucket
+        -:   31:	int count;
+        -:   32:};
+        -:   33:
+function new_Node called 0 returned 0% blocks executed 0%
+    #####:   34:static Node* new_Node(int element) {
+    #####:   35:	Node* this = (Node*)malloc(sizeof(struct Node));
+    #####:   36:	this->element = element;
+    #####:   37:	this->next = NULL;
+    #####:   38:	return this;
+    %%%%%:   38-block  0
+        -:   39:}
+        -:   40:
+        -:   41:/**
+        -:   42: * Allocate and return a new empty IntHashSet.
+        -:   43: */
+function new_IntHashSet called 0 returned 0% blocks executed 0%
+    #####:   44:IntHashSet new_IntHashSet(int size) {
+    #####:   45:	IntHashSet this = (IntHashSet)malloc(sizeof(struct IntHashSet));
+    #####:   46:	if (this == NULL) {
+    %%%%%:   46-block  0
+branch  0 never executed
+branch  1 never executed
+    #####:   47:		return NULL;
+    %%%%%:   47-block  0
+        -:   48:	}
+    #####:   49:	this->size = size;
+    #####:   50:	this->buckets = (Node**)calloc(size, sizeof(Node*));
+    #####:   51:	for (int i=0; i < size; i++) {
+    %%%%%:   51-block  0
+    %%%%%:   51-block  1
+branch  0 never executed
+branch  1 never executed
+    #####:   52:		this->buckets[i] = NULL;
+    %%%%%:   52-block  0
+        -:   53:	}
+    #####:   54:	this->count = 0;
+    #####:   55:	return this;
+    %%%%%:   55-block  0
+        -:   56:}
+        -:   57:
+        -:   58:/**
+        -:   59: * Free the given IntHashSet.
+        -:   60: */
+function IntHashSet_free called 0 returned 0% blocks executed 0%
+    #####:   61:void IntHashSet_free(IntHashSet this) {
+    #####:   62:	if (this == NULL) {
+    %%%%%:   62-block  0
+branch  0 never executed
+branch  1 never executed
+    #####:   63:		return;
+    %%%%%:   63-block  0
+        -:   64:	}
+        -:   65:	// Free all the nodes
+    #####:   66:	for (int index=0; index < this->size; index++) {
+    %%%%%:   66-block  0
+    %%%%%:   66-block  1
+    %%%%%:   66-block  2
+branch  0 never executed
+branch  1 never executed
+    #####:   67:		Node* p = this->buckets[index];
+    #####:   68:		while (p != NULL) {
+    %%%%%:   68-block  0
+    %%%%%:   68-block  1
+branch  0 never executed
+branch  1 never executed
+    #####:   69:			Node* next = p->next;
+    #####:   70:			free(p);
+    #####:   71:			p = next;
+    %%%%%:   71-block  0
+        -:   72:		}
+        -:   73:	}
+        -:   74:	// Free the hashtable (array of bucket list headers) itself
+    #####:   75:	free(this->buckets);
+        -:   76:	// Free the struct
+    #####:   77:	free(this);
+    %%%%%:   77-block  0
+        -:   78:}
+        -:   79:
+        -:   80:/**
+        -:   81: * Very simple hash function for IntHashSet.
+        -:   82: * @see FOCS p415.
+        -:   83: */
+function IntHashSet_hash called 0 returned 0% blocks executed 0%
+    #####:   84:static int IntHashSet_hash(IntHashSet this, int element) {
+    #####:   85:	int index = element % this->size;
+    #####:   86:	return index;
+    %%%%%:   86-block  0
+        -:   87:}
+        -:   88:
+        -:   89:/**
+        -:   90: * Insert the given element (int) into the Node list
+        -:   91: * pointed to by pL. That is, pL is the address of a Node.
+        -:   92: * If that address contains NULL, then this is the place
+        -:   93: * to add the element, so fill that address with a new Node.
+        -:   94: * Otherwise, pL points to a Node. If that Node's element
+        -:   95: * is the same as i, then i is already in the set and there
+        -:   96: * is nothing to do. Otherwise, try the next node in the list.
+        -:   97: * @see FOCS Fig 7.14 p. 365
+        -:   98: * We return true if the element was added or false if it was
+        -:   99: * already there, to support keeping track of the count of elements.
+        -:  100: */
+function IntHashSet_bucketInsert called 0 returned 0% blocks executed 0%
+    #####:  101:static bool IntHashSet_bucketInsert(int element, Node** pL) {
+    #####:  102:	if ((*pL) == NULL) {
+    %%%%%:  102-block  0
+branch  0 never executed
+branch  1 never executed
+        -:  103:		// Not found in bucket: append
+    #####:  104:		(*pL) = new_Node(element);
+    %%%%%:  104-block  0
+call    0 never executed
+    #####:  105:		return true; // Yes added
+    #####:  106:	} else if ((*pL)->element == element) {
+    %%%%%:  106-block  0
+branch  0 never executed
+branch  1 never executed
+        -:  107:		// Found in bucket
+    #####:  108:		return false; // Not added
+    %%%%%:  108-block  0
+        -:  109:	} else {
+        -:  110:		// Keep searching bucket
+    #####:  111:		return IntHashSet_bucketInsert(element, &((*pL)->next));
+    %%%%%:  111-block  0
+call    0 never executed
+        -:  112:	}
+        -:  113:}
+        -:  114:
+        -:  115:/**
+        -:  116: * Insert the given element into the given IntHashSet if
+        -:  117: * it isn't already present.
+        -:  118: */
+function IntHashSet_insert called 0 returned 0% blocks executed 0%
+    #####:  119:void IntHashSet_insert(IntHashSet this, int element) {
+    #####:  120:	int index = IntHashSet_hash(this, element);
+    %%%%%:  120-block  0
+call    0 never executed
+    #####:  121:	if (IntHashSet_bucketInsert(element, &(this->buckets[index]))) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  122:		this->count += 1;
+    %%%%%:  122-block  0
+        -:  123:	}
+    #####:  124:}
+        -:  125:
+        -:  126:/**
+        -:  127: * Return true if the given element is in the given IntHashSet,
+        -:  128: * otherwise false.
+        -:  129: */
+function IntHashSet_lookup called 0 returned 0% blocks executed 0%
+    #####:  130:bool IntHashSet_lookup(IntHashSet this, int element) {
+    #####:  131:	int index = IntHashSet_hash(this, element);
+    %%%%%:  131-block  0
+call    0 never executed
+    #####:  132:	for (Node* p=this->buckets[index]; p != NULL; p=p->next) {
+    %%%%%:  132-block  0
+    %%%%%:  132-block  1
+branch  0 never executed
+branch  1 never executed
+    #####:  133:		if (p->element == element) {
+    %%%%%:  133-block  0
+branch  0 never executed
+branch  1 never executed
+    #####:  134:			return true;
+    %%%%%:  134-block  0
+        -:  135:		}
+        -:  136:	}
+    #####:  137:	return false;
+    %%%%%:  137-block  0
+        -:  138:}
+        -:  139:
+        -:  140:/**
+        -:  141: * Add the contents of another IntHashSet to the given IntHashSet
+        -:  142: * (only adding those elements that aren't already in the first set).
+        -:  143: * This will modify the first set unless the second set is empty or
+        -:  144: * all its elements are already in the first set.
+        -:  145: */
+function IntHashSet_union called 0 returned 0% blocks executed 0%
+    #####:  146:void IntHashSet_union(IntHashSet this, const IntHashSet other) {
+        -:  147:	// Iterate over elements of other set, adding to this set
+    #####:  148:	for (int index=0; index < other->size; index++) {
+    %%%%%:  148-block  0
+    %%%%%:  148-block  1
+    %%%%%:  148-block  2
+branch  0 never executed
+branch  1 never executed
+    #####:  149:		for (Node* p=other->buckets[index]; p != NULL; p=p->next) {
+    %%%%%:  149-block  0
+    %%%%%:  149-block  1
+branch  0 never executed
+branch  1 never executed
+    #####:  150:			int element = p->element;
+    #####:  151:			IntHashSet_insert(this, element);
+    %%%%%:  151-block  0
+call    0 never executed
+        -:  152:		}
+        -:  153:	}
+    #####:  154:}
+        -:  155:
+        -:  156:/**
+        -:  157: * Print the given IntHashSet to stdout.
+        -:  158: */
+function IntHashSet_print called 0 returned 0% blocks executed 0%
+    #####:  159:void IntHashSet_print(IntHashSet this) {
+    #####:  160:	printf("{");
+    %%%%%:  160-block  0
+call    0 never executed
+    #####:  161:	int n = 0;
+    #####:  162:	for (int index=0; index < this->size; index++) {
+    %%%%%:  162-block  0
+    %%%%%:  162-block  1
+branch  0 never executed
+branch  1 never executed
+    #####:  163:		for (Node* p=this->buckets[index]; p != NULL; p=p->next) {
+    %%%%%:  163-block  0
+    %%%%%:  163-block  1
+    %%%%%:  163-block  2
+branch  0 never executed
+branch  1 never executed
+    #####:  164:			int element = p->element;
+    #####:  165:			printf("%d", element);
+    %%%%%:  165-block  0
+call    0 never executed
+    #####:  166:			n += 1;
+    #####:  167:			if (n < this->count) {
+branch  0 never executed
+branch  1 never executed
+    #####:  168:				printf(",");
+    %%%%%:  168-block  0
+call    0 never executed
+        -:  169:			}
+        -:  170:		}
+        -:  171:	}
+    #####:  172:	printf("}");
+    %%%%%:  172-block  0
+call    0 never executed
+    #####:  173:}
+        -:  174:
+        -:  175:/**
+        -:  176: * Return the number of elements (ints) in the given IntHashSet.
+        -:  177: */
+function IntHashSet_count called 0 returned 0% blocks executed 0%
+    #####:  178:int IntHashSet_count(IntHashSet this) {
+        -:  179:	// Cached count saves scanning the entire hashtable every time
+    #####:  180:	return this->count;
+    %%%%%:  180-block  0
+        -:  181:}
+        -:  182:
+        -:  183:/**
+        -:  184: * Return true if this IntHashSet is empty (contains no elements).
+        -:  185: */
+function IntHashSet_isEmpty called 0 returned 0% blocks executed 0%
+    #####:  186:bool IntHashSet_isEmpty(IntHashSet this) {
+        -:  187:	// Ditto
+    #####:  188:	return this->count == 0;
+    %%%%%:  188-block  0
+        -:  189:}
+        -:  190:
+        -:  191:/**
+        -:  192: * Return true if the two given IntHashSets contain exactly the
+        -:  193: * name elements (ints), otherwise false.
+        -:  194: */
+function IntHashSet_equals called 0 returned 0% blocks executed 0%
+    #####:  195:bool IntHashSet_equals(IntHashSet this, IntHashSet other) {
+        -:  196:	// Cached count may short-circuit this test
+    #####:  197:	if (this->count != other->count) {
+    %%%%%:  197-block  0
+branch  0 never executed
+branch  1 never executed
+    #####:  198:		return false;
+    %%%%%:  198-block  0
+        -:  199:	}
+        -:  200:	// Otherwise have to scan and test each element
+        -:  201:	// You might be able to figure out which is better to scan over...
+    #####:  202:	for (int index=0; index < this->size; index++) {
+    %%%%%:  202-block  0
+    %%%%%:  202-block  1
+    %%%%%:  202-block  2
+branch  0 never executed
+branch  1 never executed
+    #####:  203:		for (Node* p=this->buckets[index]; p != NULL; p=p->next) {
+    %%%%%:  203-block  0
+    %%%%%:  203-block  1
+    %%%%%:  203-block  2
+branch  0 never executed
+branch  1 never executed
+    #####:  204:			int element = p->element;
+    #####:  205:			if (!IntHashSet_lookup(other, element)) {
+    %%%%%:  205-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  206:				return false;
+    %%%%%:  206-block  0
+        -:  207:			}
+        -:  208:		}
+        -:  209:	}
+    #####:  210:	return true;
+    %%%%%:  210-block  0
+        -:  211:}
+        -:  212:
+        -:  213:/**
+        -:  214: * Call the given function on each element of the given
+        -:  215: * IntHashSet, calling the given function on each int value
+        -:  216: * one after the other.
+        -:  217: */
+function IntHashSet_iterate called 0 returned 0% blocks executed 0%
+    #####:  218:void IntHashSet_iterate(const IntHashSet this, void (*func)(int)) {
+    #####:  219:	for (int index=0; index < this->size; index++) {
+    %%%%%:  219-block  0
+    %%%%%:  219-block  1
+    %%%%%:  219-block  2
+branch  0 never executed
+branch  1 never executed
+    #####:  220:		for (Node* p=this->buckets[index]; p != NULL; p=p->next) {
+    %%%%%:  220-block  0
+    %%%%%:  220-block  1
+branch  0 never executed
+branch  1 never executed
+    #####:  221:			int element = p->element;
+    #####:  222:			func(element);
+    %%%%%:  222-block  0
+call    0 never executed
+        -:  223:		}
+        -:  224:	}
+    #####:  225:}
+        -:  226:
+        -:  227:/**
+        -:  228: * An IntHashSetIterator iterates over the elements (ints)
+        -:  229: * in an IntHashSet.
+        -:  230: */
+        -:  231:struct IntHashSetIterator {
+        -:  232:	IntHashSet set;
+        -:  233:	int count;
+        -:  234:	int index;	// bucket
+        -:  235:	Node *node;	// Node within bucket
+        -:  236:};
+        -:  237:
+        -:  238:/**
+        -:  239: * Return an IntHashSetIterator for the given IntHashSet.
+        -:  240: * Don't forget to free() this when you're done iterating.
+        -:  241: */
+function IntHashSet_iterator called 0 returned 0% blocks executed 0%
+    #####:  242:IntHashSetIterator IntHashSet_iterator(const IntHashSet this) {
+    #####:  243:	IntHashSetIterator iterator = (IntHashSetIterator)malloc(sizeof(struct IntHashSetIterator));
+    #####:  244:	iterator->set = this;
+    #####:  245:	iterator->count = 0;
+    #####:  246:	iterator->index = 0;
+    #####:  247:	iterator->node = this->buckets[0];
+    #####:  248:	return iterator;
+    %%%%%:  248-block  0
+        -:  249:}
+        -:  250:
+        -:  251:/**
+        -:  252: * Return true if the next call to IntHashSetIterator_next on the given
+        -:  253: * IntHashSetIterator will not fail.
+        -:  254: */
+function IntHashSetIterator_hasNext called 0 returned 0% blocks executed 0%
+    #####:  255:bool IntHashSetIterator_hasNext(const IntHashSetIterator this) {
+    #####:  256:	return this->count < this->set->count;
+    %%%%%:  256-block  0
+        -:  257:}
+        -:  258:
+        -:  259:/**
+        -:  260: * Return the next int in the IntHashSet underlying the given
+        -:  261: * IntHashSetIterator, or -1 if there is no such element (even though
+        -:  262: * -1 could be a value in an IntHashSet).
+        -:  263: */
+function IntHashSetIterator_next called 0 returned 0% blocks executed 0%
+    #####:  264:int IntHashSetIterator_next(IntHashSetIterator this) {
+    #####:  265:	while (this->node == NULL) {
+    %%%%%:  265-block  0
+    %%%%%:  265-block  1
+branch  0 never executed
+branch  1 never executed
+    #####:  266:		if (this->index >= this->set->size) {
+    %%%%%:  266-block  0
+branch  0 never executed
+branch  1 never executed
+        -:  267:			// Not found!
+    #####:  268:			return -1;
+    %%%%%:  268-block  0
+        -:  269:		}
+    #####:  270:		this->index += 1;
+    #####:  271:		this->node = this->set->buckets[this->index];
+    %%%%%:  271-block  0
+        -:  272:	}
+    #####:  273:	int element = this->node->element;
+    #####:  274:	this->node = this->node->next;
+    #####:  275:	this->count += 1;
+    #####:  276:	return element;
+    %%%%%:  276-block  0
+        -:  277:}
+        -:  278:
+        -:  279:/**
+        -:  280: * Return the string representation of the given IntHashSet.
+        -:  281: * Don't forget to free() this string.
+        -:  282: */
+function IntHashSet_toString called 0 returned 0% blocks executed 0%
+    #####:  283:char* IntHashSet_toString(IntHashSet this) {
+    #####:  284:	char *result = NULL;
+    #####:  285:	IntHashSetIterator iterator = IntHashSet_iterator(this);
+    %%%%%:  285-block  0
+call    0 never executed
+    #####:  286:	while (IntHashSetIterator_hasNext(iterator)) {
+    %%%%%:  286-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  287:		int value = IntHashSetIterator_next(iterator);
+    %%%%%:  287-block  0
+call    0 never executed
+        -:  288:		static char buf[256];
+    #####:  289:		snprintf(buf, sizeof(buf)-1, "%d", value);
+    #####:  290:		if (IntHashSetIterator_hasNext(iterator)) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  291:			strcat(buf, ",");
+    %%%%%:  291-block  0
+        -:  292:		}
+    #####:  293:		if (result == NULL) {
+    %%%%%:  293-block  0
+branch  0 never executed
+branch  1 never executed
+    #####:  294:			result = malloc(strlen(buf)+1);
+    #####:  295:			strcpy(result, buf);
+    %%%%%:  295-block  0
+        -:  296:		} else {
+    #####:  297:			char *old_result = result;
+    #####:  298:			result = (char*)malloc(strlen(old_result)+strlen(buf)+1);
+    #####:  299:			strcpy(result, old_result);
+    #####:  300:			strcat(result, buf);
+    #####:  301:			free(old_result);
+    %%%%%:  301-block  0
+        -:  302:		}
+        -:  303:	}
+    #####:  304:	free(iterator);
+    #####:  305:	return result;
+    %%%%%:  305-block  0
+        -:  306:}
+        -:  307:
+        -:  308:#ifdef MAIN
+        -:  309:
+        -:  310:static void callback(int element) {
+        -:  311:	printf("callback: %d\n", element);
+        -:  312:}
+        -:  313:
+        -:  314:int main(int argc, char* argv[]) {
+        -:  315:	printf("creating set with size 7...\n");
+        -:  316:	IntHashSet set1 = new_IntHashSet(7);
+        -:  317:	printf("testing insert...\n");
+        -:  318:	IntHashSet_insert(set1, 0);
+        -:  319:	IntHashSet_insert(set1, 1);
+        -:  320:	IntHashSet_insert(set1, 2);
+        -:  321:	IntHashSet_print(set1);
+        -:  322:	printf("\n");
+        -:  323:	printf("testing insert existing elements...\n");
+        -:  324:	IntHashSet_insert(set1, 0);
+        -:  325:	IntHashSet_print(set1);
+        -:  326:	IntHashSet_insert(set1, 1);
+        -:  327:	IntHashSet_print(set1);
+        -:  328:	IntHashSet_insert(set1, 2);
+        -:  329:	IntHashSet_print(set1);
+        -:  330:	printf("\n");
+        -:  331:	printf("testing insert to force overflow...\n");
+        -:  332:	IntHashSet_insert(set1, 3);
+        -:  333:	IntHashSet_insert(set1, 4);
+        -:  334:	IntHashSet_insert(set1, 5);
+        -:  335:	IntHashSet_insert(set1, 6);
+        -:  336:	IntHashSet_insert(set1, 7); // index 0: 0,7,1,2,3,4,5,6
+        -:  337:	IntHashSet_print(set1);
+        -:  338:	printf("\n");
+        -:  339:	printf("testing lookup...\n");
+        -:  340:	printf("lookup 0: %d\n", IntHashSet_lookup(set1, 0));
+        -:  341:	printf("lookup 3: %d\n", IntHashSet_lookup(set1, 3));
+        -:  342:	printf("lookup 7: %d\n", IntHashSet_lookup(set1, 7));
+        -:  343:	printf("lookup 8: %d\n", IntHashSet_lookup(set1, 8));
+        -:  344:	printf("testing iterate...\n");
+        -:  345:	IntHashSet_iterate(set1, callback);
+        -:  346:	printf("testing iterator...\n");
+        -:  347:	IntHashSetIterator iterator = IntHashSet_iterator(set1);
+        -:  348:	while (IntHashSetIterator_hasNext(iterator)) {
+        -:  349:		int element = IntHashSetIterator_next(iterator);
+        -:  350:		printf("%d ", element);
+        -:  351:	}
+        -:  352:	printf("\n");
+        -:  353:	printf("freeing iterator\n");
+        -:  354:	free(iterator);
+        -:  355:	printf("creating new set with size 5...\n");
+        -:  356:	IntHashSet set2 = new_IntHashSet(5);
+        -:  357:	IntHashSet_insert(set2, 0);
+        -:  358:	IntHashSet_insert(set2, 1);
+        -:  359:	IntHashSet_insert(set2, 2);
+        -:  360:	IntHashSet_print(set2);
+        -:  361:	printf("\n");
+        -:  362:	printf("set1 equals set2? %d\n", IntHashSet_equals(set1, set2));
+        -:  363:	printf("set2 equals set1? %d\n", IntHashSet_equals(set2, set1));
+        -:  364:	IntHashSet_insert(set2, 3);
+        -:  365:	IntHashSet_insert(set2, 4);
+        -:  366:	IntHashSet_insert(set2, 5); // index 0
+        -:  367:	IntHashSet_insert(set2, 6); // index 1
+        -:  368:	IntHashSet_insert(set2, 7); // index 2
+        -:  369:	IntHashSet_print(set2);
+        -:  370:	printf("\n");
+        -:  371:	printf("set1 equals set2? %d\n", IntHashSet_equals(set1, set2));
+        -:  372:	printf("set2 equals set1? %d\n", IntHashSet_equals(set2, set1));
+        -:  373:	printf("testing set1 with more elements...\n");
+        -:  374:	for (int i=8; i < 100; i++) {
+        -:  375:		IntHashSet_insert(set1, i);
+        -:  376:	}
+        -:  377:	IntHashSet_print(set1);
+        -:  378:	printf("\n");
+        -:  379:	printf("lookup 77: %d\n", IntHashSet_lookup(set1, 77));
+        -:  380:	printf("lookup 666: %d\n", IntHashSet_lookup(set1, 666));
+        -:  381:	printf("testing toString...\n");
+        -:  382:	char *s1 = IntHashSet_toString(set1);
+        -:  383:	printf("s1=\"%s\"\n", s1);
+        -:  384:	free(s1);
+        -:  385:	char *s2 = IntHashSet_toString(set2);
+        -:  386:	printf("s2=\"%s\"\n", s2);
+        -:  387:	free(s2);
+        -:  388:	printf("freeing both sets\n");
+        -:  389:	IntHashSet_free(set1);
+        -:  390:	IntHashSet_free(set2);
+        -:  391:}
+        -:  392:
+        -:  393:#endif
+        -:  394:

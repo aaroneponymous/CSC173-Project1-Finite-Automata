@@ -1,0 +1,34 @@
+        -:    0:Source:/mnt/c/Aaron's Folder/173Projects/Project2/strdup.c
+        -:    0:Graph:/mnt/c/Aaron's Folder/173Projects/Project2/cmake-build-debug-coverage/CMakeFiles/Project2.dir/strdup.c.gcno
+        -:    0:Data:/mnt/c/Aaron's Folder/173Projects/Project2/cmake-build-debug-coverage/CMakeFiles/Project2.dir/strdup.c.gcda
+        -:    0:Runs:1
+        -:    1:/*
+        -:    2: * File: strdup.c
+        -:    3: * Creator: George Ferguson
+        -:    4: * Created: Tue Aug  8 10:05:19 2017
+        -:    5: *
+        -:    6: * Incredibly, strdup is in string.h but not part of ANSI standard C.
+        -:    7: */
+        -:    8:
+        -:    9:#include <stdlib.h>
+        -:   10:#include "strdup.h"
+        -:   11:
+        -:   12:/**
+        -:   13: * From strdup(3): allocates sufficient memory for a copy of the
+        -:   14: * string s, does the copy, and returns a pointer to it.
+        -:   15: */
+        -:   16:char*
+        -:   17:strdup(const char* s) {
+    #####:   18:    if (s == NULL) {
+    %%%%%:   18-block  0
+branch  0 never executed
+branch  1 never executed
+    #####:   19:	return NULL;
+    %%%%%:   19-block  0
+        -:   20:    }
+    #####:   21:    char* t = malloc(strlen(s)+1);
+    #####:   22:    strcpy(t, s);
+    #####:   23:    return t;
+    %%%%%:   23-block  0
+        -:   24:}
+        -:   25:

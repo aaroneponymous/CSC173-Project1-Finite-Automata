@@ -1,0 +1,418 @@
+        -:    0:Source:/mnt/c/Aaron's Folder/173Projects/Project2/BitSet.c
+        -:    0:Graph:/mnt/c/Aaron's Folder/173Projects/Project2/cmake-build-debug-coverage/CMakeFiles/Project2.dir/BitSet.c.gcno
+        -:    0:Data:/mnt/c/Aaron's Folder/173Projects/Project2/cmake-build-debug-coverage/CMakeFiles/Project2.dir/BitSet.c.gcda
+        -:    0:Runs:1
+        -:    1:/*
+        -:    2: * File: BitSet.c
+        -:    3: * Creator: George Ferguson
+        -:    4: * Created: Thu Aug  3 17:36:24 2017
+        -:    5: *
+        -:    6: * A BitSet represents a set of integers using bits of an int.
+        -:    7: * This makes most of the set operations constant-time.
+        -:    8: * The maximum value that can be stored in the set is limited
+        -:    9: * by the number of bits in the biggest int we can get
+        -:   10: * (typically 64, sometimes 32).
+        -:   11: */
+        -:   12:#include <stdlib.h>
+        -:   13:#include <stdio.h>
+        -:   14:#include "BitSet.h"
+        -:   15:
+        -:   16:// Use the longest int we can get
+        -:   17:typedef unsigned long long int bitset_t;
+        -:   18:
+        -:   19:#define NUMBITS (sizeof(bitset_t) * 8)
+        -:   20:
+        -:   21:struct BitSet {
+        -:   22:	bitset_t bits;
+        -:   23:};
+        -:   24:
+        -:   25:/**
+        -:   26: * Return the largest value that can be stored in a BitSet.
+        -:   27: * BitSets can store elements with values from 0 to this value.
+        -:   28: */
+function BitSet_maxValue called 0 returned 0% blocks executed 0%
+    #####:   29:int BitSet_maxValue() {
+    #####:   30:	return NUMBITS - 1;
+    %%%%%:   30-block  0
+        -:   31:}
+        -:   32:
+        -:   33:/**
+        -:   34: * Allocate, initialize and return a new (empty) BitSet.
+        -:   35: */
+function new_BitSet called 0 returned 0% blocks executed 0%
+    #####:   36:BitSet new_BitSet() {
+    #####:   37:	BitSet this = (BitSet)malloc(sizeof(struct BitSet));
+    #####:   38:	this->bits = 0;
+    #####:   39:	return this;
+    %%%%%:   39-block  0
+        -:   40:}
+        -:   41:
+        -:   42:/**
+        -:   43: * Free the memory used for the given BitSet.
+        -:   44: */
+function BitSet_free called 0 returned 0% blocks executed 0%
+    #####:   45:void BitSet_free(BitSet this) {
+    #####:   46:	if (this) {
+    %%%%%:   46-block  0
+branch  0 never executed
+branch  1 never executed
+    #####:   47:		free(this);
+    %%%%%:   47-block  0
+        -:   48:	}
+    #####:   49:}
+        -:   50:
+        -:   51:/**
+        -:   52: * Return true if the given BitSet is empty.
+        -:   53: */
+function BitSet_isEmpty called 0 returned 0% blocks executed 0%
+    #####:   54:bool BitSet_isEmpty(const BitSet set) {
+    #####:   55:	return set->bits == 0;
+    %%%%%:   55-block  0
+        -:   56:}
+        -:   57:
+        -:   58:/**
+        -:   59: * Add given element (int) to the given BitSet (if it's not already there).
+        -:   60: */
+function BitSet_insert called 0 returned 0% blocks executed 0%
+    #####:   61:void BitSet_insert(BitSet set, int element) {
+        -:   62:	// Range check
+    #####:   63:	if (element < 0 || element >= NUMBITS) {
+    %%%%%:   63-block  0
+branch  0 never executed
+branch  1 never executed
+    %%%%%:   63-block  1
+branch  2 never executed
+branch  3 never executed
+    #####:   64:		fprintf(stderr, "BitSet_insert: element out of range: %d\n", element);
+    %%%%%:   64-block  0
+call    0 never executed
+    #####:   65:		abort();
+call    0 never executed
+        -:   66:	}
+    #####:   67:	set->bits |= (1L << element);
+    #####:   68:}
+        -:   69:
+        -:   70:/**
+        -:   71: * Return true if the given BitSet contains the given element (int).
+        -:   72: */
+function BitSet_lookup called 0 returned 0% blocks executed 0%
+    #####:   73:bool BitSet_lookup(const BitSet this, int element) {
+        -:   74:	// Range check
+    #####:   75:	if (element < 0 || element >= NUMBITS) {
+    %%%%%:   75-block  0
+branch  0 never executed
+branch  1 never executed
+    %%%%%:   75-block  1
+branch  2 never executed
+branch  3 never executed
+    #####:   76:		fprintf(stderr, "BitSet_lookup: element out of range: %d\n", element);
+    %%%%%:   76-block  0
+call    0 never executed
+    #####:   77:		abort();
+call    0 never executed
+        -:   78:	}
+    #####:   79:	return this->bits & (1L << element);
+    %%%%%:   79-block  0
+        -:   80:}
+        -:   81:
+        -:   82:/**
+        -:   83: * Add the contents of the second BitSet to the first BitSet (adding those elements
+        -:   84: * that aren't already in set1). This will modify the first set unless the second
+        -:   85: * set is empty or all its elements are already in in the first set.
+        -:   86: */
+function BitSet_union called 0 returned 0% blocks executed 0%
+    #####:   87:void BitSet_union(BitSet this, const BitSet other) {
+    #####:   88:	this->bits |= other->bits;
+    #####:   89:}
+        -:   90:
+        -:   91:/**
+        -:   92: * Return true if the first BitSet contains every element in the second
+        -:   93: * BitSet.
+        -:   94: */
+function BitSet_containsAll called 0 returned 0% blocks executed 0%
+    #####:   95:bool BitSet_containsAll(BitSet this, BitSet other) {
+    #####:   96:	return (this->bits | other->bits) == this->bits;
+    %%%%%:   96-block  0
+        -:   97:}
+        -:   98:
+        -:   99:/**
+        -:  100: * Return true if the two given BitSets contain exactly the same elements,
+        -:  101: * otherwise false.
+        -:  102: */
+function BitSet_equals called 0 returned 0% blocks executed 0%
+    #####:  103:bool BitSet_equals(BitSet this, BitSet other) {
+    #####:  104:	return this->bits == other->bits;
+    %%%%%:  104-block  0
+        -:  105:}
+        -:  106:
+        -:  107:/**
+        -:  108: * Call the given function on each element of given BitSet, passing the
+        -:  109: * element (int) to the function.
+        -:  110: */
+function BitSet_iterate called 0 returned 0% blocks executed 0%
+    #####:  111:void BitSet_iterate(const BitSet this, void (*func)(int)) {
+    #####:  112:	for (int i=0; i < NUMBITS; i++) {
+    %%%%%:  112-block  0
+    %%%%%:  112-block  1
+    %%%%%:  112-block  2
+branch  0 never executed
+branch  1 never executed
+    #####:  113:		if (BitSet_lookup(this, i)) {
+    %%%%%:  113-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  114:			func(i);
+    %%%%%:  114-block  0
+call    0 never executed
+        -:  115:		}
+        -:  116:	}
+    #####:  117:}
+        -:  118:
+        -:  119:struct BitSetIterator {
+        -:  120:	BitSet set;
+        -:  121:	int index;
+        -:  122:};
+        -:  123:
+        -:  124:/**
+        -:  125: * Return an BitSetIterator for the given BitSet.
+        -:  126: * Don't forget to free() this when you're done iterating.
+        -:  127: */
+function BitSet_iterator called 0 returned 0% blocks executed 0%
+    #####:  128:BitSetIterator BitSet_iterator(const BitSet this) {
+    #####:  129:	BitSetIterator iterator = (BitSetIterator)malloc(sizeof(struct BitSetIterator));
+    #####:  130:	iterator->set = this;
+    #####:  131:	iterator->index = 0;
+    #####:  132:	return iterator;
+    %%%%%:  132-block  0
+        -:  133:}
+        -:  134:
+        -:  135:/**
+        -:  136: * Return true if the next call to BitSetIterator_next on the given
+        -:  137: * BitSetIterator will not fail.
+        -:  138: * Note that this function changes the iterator, advancing it to the
+        -:  139: * next 1 bit (or the end of the set).
+        -:  140: */
+function BitSetIterator_hasNext called 0 returned 0% blocks executed 0%
+    #####:  141:bool BitSetIterator_hasNext(BitSetIterator this) {
+    #####:  142:	while (this->index < NUMBITS) {
+    %%%%%:  142-block  0
+    %%%%%:  142-block  1
+branch  0 never executed
+branch  1 never executed
+    #####:  143:		if (BitSet_lookup(this->set, this->index)) {
+    %%%%%:  143-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  144:			return true;
+    %%%%%:  144-block  0
+        -:  145:		} else {
+    #####:  146:			this->index += 1;
+    %%%%%:  146-block  0
+        -:  147:		}
+        -:  148:	}
+    #####:  149:	return false;
+    %%%%%:  149-block  0
+        -:  150:}
+        -:  151:
+        -:  152:/**
+        -:  153: * Return the next element (int) in the BitSet underlying the
+        -:  154: * given BitSetIterator, or -1 if there is no such element.
+        -:  155: */
+function BitSetIterator_next called 0 returned 0% blocks executed 0%
+    #####:  156:int BitSetIterator_next(BitSetIterator this) {
+    #####:  157:	if (BitSetIterator_hasNext(this)) {
+    %%%%%:  157-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  158:		// iterator index will point to next 1 bit
+    #####:  159:		int value = this->index;
+    #####:  160:		this->index += 1;
+    #####:  161:		return value;
+    %%%%%:  161-block  0
+        -:  162:	} else {
+    #####:  163:		return -1;
+    %%%%%:  163-block  0
+        -:  164:	}
+        -:  165:}
+        -:  166:
+        -:  167:/**
+        -:  168: * Print the given BitSet to stdout.
+        -:  169: * Note that this allocates an
+        -:  170: */
+        -:  171:void
+function BitSet_print called 0 returned 0% blocks executed 0%
+    #####:  172:BitSet_print(BitSet this) {
+    #####:  173:	printf("{");
+    %%%%%:  173-block  0
+call    0 never executed
+    #####:  174:	bool firstElement = true;
+    #####:  175:	for (int i=0; i < NUMBITS; i++) {
+    %%%%%:  175-block  0
+    %%%%%:  175-block  1
+branch  0 never executed
+branch  1 never executed
+    #####:  176:		if (BitSet_lookup(this, i)) {
+    %%%%%:  176-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  177:			if (!firstElement) {
+    %%%%%:  177-block  0
+branch  0 never executed
+branch  1 never executed
+    #####:  178:				printf(",");
+    %%%%%:  178-block  0
+call    0 never executed
+        -:  179:			} else {
+    #####:  180:				firstElement = false;
+    %%%%%:  180-block  0
+        -:  181:			}
+    #####:  182:			printf("%d", i);
+    %%%%%:  182-block  0
+call    0 never executed
+        -:  183:		}
+        -:  184:	}
+    #####:  185:	printf("}");
+    %%%%%:  185-block  0
+call    0 never executed
+    #####:  186:}
+        -:  187:
+        -:  188:#include <string.h>
+        -:  189:
+        -:  190:/**
+        -:  191: * Return the string representation of the given BitSet.
+        -:  192: * Don't forget to free() this string.
+        -:  193: */
+function BitSet_toString called 0 returned 0% blocks executed 0%
+    #####:  194:char* BitSet_toString(BitSet this) {
+    #####:  195:	char *result = NULL;
+    #####:  196:	BitSetIterator iterator = BitSet_iterator(this);
+    %%%%%:  196-block  0
+call    0 never executed
+    #####:  197:	while (BitSetIterator_hasNext(iterator)) {
+    %%%%%:  197-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  198:		int value = BitSetIterator_next(iterator);
+    %%%%%:  198-block  0
+call    0 never executed
+        -:  199:		static char buf[256];
+    #####:  200:		snprintf(buf, sizeof(buf)-2, "%d", value);
+    #####:  201:		if (BitSetIterator_hasNext(iterator)) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  202:			strcat(buf, ",");
+    %%%%%:  202-block  0
+        -:  203:		}
+    #####:  204:		if (result == NULL) {
+    %%%%%:  204-block  0
+branch  0 never executed
+branch  1 never executed
+    #####:  205:			result = malloc(strlen(buf)+1);
+    #####:  206:			strcpy(result, buf);
+    %%%%%:  206-block  0
+        -:  207:		} else {
+    #####:  208:			char *old_result = result;
+    #####:  209:			result = (char*)malloc(strlen(old_result)+strlen(buf)+1);
+    #####:  210:			strcpy(result, old_result);
+    #####:  211:			strcat(result, buf);
+    #####:  212:			free(old_result);
+    %%%%%:  212-block  0
+        -:  213:		}
+        -:  214:	}
+    #####:  215:	free(iterator);
+    #####:  216:	return result;
+    %%%%%:  216-block  0
+        -:  217:}
+        -:  218:
+        -:  219:#ifdef MAIN
+        -:  220:
+        -:  221:static void callback(int element) {
+        -:  222:	printf("callback: %d\n", element);
+        -:  223:}
+        -:  224:
+        -:  225:int main(int argc, char* argv[]) {
+        -:  226:	printf("creating initial set...\n");
+        -:  227:	BitSet set1 = new_BitSet();
+        -:  228:	printf("testing insert...\n");
+        -:  229:	BitSet_insert(set1, 0);
+        -:  230:	BitSet_insert(set1, 1);
+        -:  231:	BitSet_insert(set1, 2);
+        -:  232:	BitSet_print(set1);
+        -:  233:	printf("\n");
+        -:  234:	printf("testing insert existing elements...\n");
+        -:  235:	BitSet_insert(set1, 0);
+        -:  236:	BitSet_print(set1);
+        -:  237:	BitSet_insert(set1, 1);
+        -:  238:	BitSet_print(set1);
+        -:  239:	BitSet_insert(set1, 2);
+        -:  240:	BitSet_print(set1);
+        -:  241:	printf("\n");
+        -:  242:	printf("testing insert to force overflow...\n");
+        -:  243:	BitSet_insert(set1, 3);
+        -:  244:	BitSet_insert(set1, 4);
+        -:  245:	BitSet_insert(set1, 5);
+        -:  246:	BitSet_insert(set1, 6);
+        -:  247:	BitSet_insert(set1, 7); // index 0: 0,7,1,2,3,4,5,6
+        -:  248:	BitSet_print(set1);
+        -:  249:	printf("\n");
+        -:  250:	printf("testing lookup...\n");
+        -:  251:	printf("lookup 0: %d\n", BitSet_lookup(set1, 0));
+        -:  252:	printf("lookup 3: %d\n", BitSet_lookup(set1, 3));
+        -:  253:	printf("lookup 7: %d\n", BitSet_lookup(set1, 7));
+        -:  254:	printf("lookup 8: %d\n", BitSet_lookup(set1, 8));
+        -:  255:	printf("testing iterate...\n");
+        -:  256:	BitSet_iterate(set1, callback);
+        -:  257:	printf("testing iterator...\n");
+        -:  258:	BitSetIterator iterator = BitSet_iterator(set1);
+        -:  259:	while (BitSetIterator_hasNext(iterator)) {
+        -:  260:		int element = BitSetIterator_next(iterator);
+        -:  261:		printf("%d ", element);
+        -:  262:	}
+        -:  263:	printf("\n");
+        -:  264:	printf("freeing iterator\n");
+        -:  265:	free(iterator);
+        -:  266:	printf("creating new set...\n");
+        -:  267:	BitSet set2 = new_BitSet();
+        -:  268:	BitSet_insert(set2, 0);
+        -:  269:	BitSet_insert(set2, 1);
+        -:  270:	BitSet_insert(set2, 2);
+        -:  271:	BitSet_print(set2);
+        -:  272:	printf("\n");
+        -:  273:	printf("set1 equals set2? %d\n", BitSet_equals(set1, set2));
+        -:  274:	printf("set2 equals set1? %d\n", BitSet_equals(set2, set1));
+        -:  275:	BitSet_insert(set2, 3);
+        -:  276:	BitSet_insert(set2, 4);
+        -:  277:	BitSet_insert(set2, 5); // index 0
+        -:  278:	BitSet_insert(set2, 6); // index 1
+        -:  279:	BitSet_insert(set2, 7); // index 2
+        -:  280:	BitSet_print(set2);
+        -:  281:	printf("\n");
+        -:  282:	printf("set1 equals set2? %d\n", BitSet_equals(set1, set2));
+        -:  283:	printf("set2 equals set1? %d\n", BitSet_equals(set2, set1));
+        -:  284:	printf("testing set1 with more elements...\n");
+        -:  285:	for (int i=8; i < NUMBITS; i+=2) {
+        -:  286:		BitSet_insert(set1, i);
+        -:  287:	}
+        -:  288:	BitSet_print(set1);
+        -:  289:	printf("\n");
+        -:  290:	printf("lookup 48: %d\n", BitSet_lookup(set1, 48));
+        -:  291:	printf("lookup 49: %d\n", BitSet_lookup(set1, 49));
+        -:  292:	printf("testing toString...\n");
+        -:  293:	char *s1 = BitSet_toString(set1);
+        -:  294:	printf("s1=\"%s\"\n", s1);
+        -:  295:	free(s1);
+        -:  296:	char *s2 = BitSet_toString(set2);
+        -:  297:	printf("s2=\"%s\"\n", s2);
+        -:  298:	free(s2);
+        -:  299:	printf("freeing both sets\n");
+        -:  300:	BitSet_free(set1);
+        -:  301:	BitSet_free(set2);
+        -:  302:}
+        -:  303:
+        -:  304:#endif

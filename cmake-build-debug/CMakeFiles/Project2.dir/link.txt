@@ -1,0 +1,1 @@
+/usr/bin/cc -g CMakeFiles/Project2.dir/makeDfaNfa.c.o CMakeFiles/Project2.dir/BitSet.c.o CMakeFiles/Project2.dir/dfa.c.o CMakeFiles/Project2.dir/IntHashSet.c.o CMakeFiles/Project2.dir/LinkedList.c.o CMakeFiles/Project2.dir/strdup.c.o -o Project2 
