@@ -9,6 +9,8 @@
 
 #include <stdbool.h>
 #include "Set.h"
+#include "LinkedList.h"
+#include "dfa.h"
 
 /**
  * The data structure used to represent a nondeterministic finite automaton.
@@ -36,8 +38,29 @@
 // potentially iterate through the transition matrix to find the next set of states
 // and iterate over them until the end of the string is reached or the path ends (dead state/false state)
 // and then go back to the initial state and iterate through the next element in the list
-// Use Recursion or
+// Use Recursion or keep track of the current state and the current symbol
+// and then iterate through the transition matrix to find the next set of states
+// and then iterate through the next set of states until the end of the string is reached
+// or the path ends (dead state/false state)
+
+// I'll try Recursion and then see what happens
+
+// What do I need in the struct NFA then?
+// 1. noOfStates as an int
+// 2. transition matrix as a 2-D array of sets of states (pointer to a pointer to a set of states)
+// 3. accepting states as a 1-D array of boolean values (pointer to a boolean)
+// 4. do I need an initial state tracker? That could potentially hold the value of the current state
+// while the recursion is happening?
+
 typedef struct NFA *NFA;
+
+struct NFA
+{
+    int noOfStates;
+    // Pointer to a pointer to a set of states (LinkedList)
+    Set **transitionMatrix;
+    bool *acceptingStates;
+};
 
 /**
  * Allocate and return a new NFA containing the given number of states.

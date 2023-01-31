@@ -44,6 +44,16 @@ dfa.h
 nfa.h
 /mnt/c/Aaron's Folder/173Projects/Project2/nfa.h
 
+/mnt/c/Aaron's Folder/173Projects/Project2/nfa.c
+stdio.h
+-
+stdlib.h
+-
+stdbool.h
+-
+nfa.h
+/mnt/c/Aaron's Folder/173Projects/Project2/nfa.h
+
 /mnt/c/Aaron's Folder/173Projects/Project2/nfa.h
 stdbool.h
 -
