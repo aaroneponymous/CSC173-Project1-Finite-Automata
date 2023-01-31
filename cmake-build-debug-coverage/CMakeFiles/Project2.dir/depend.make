@@ -15,6 +15,7 @@ CMakeFiles/Project2.dir/dfa.c.o: ../dfa.h
 
 CMakeFiles/Project2.dir/makeDfaNfa.c.o: ../BitSet.h
 CMakeFiles/Project2.dir/makeDfaNfa.c.o: ../IntHashSet.h
+CMakeFiles/Project2.dir/makeDfaNfa.c.o: ../LinkedList.h
 CMakeFiles/Project2.dir/makeDfaNfa.c.o: ../Set.h
 CMakeFiles/Project2.dir/makeDfaNfa.c.o: ../dfa.h
 CMakeFiles/Project2.dir/makeDfaNfa.c.o: ../makeDfaNfa.c
@@ -23,7 +24,9 @@ CMakeFiles/Project2.dir/makeDfaNfa.c.o: ../nfa.h
 
 CMakeFiles/Project2.dir/nfa.c.o: ../BitSet.h
 CMakeFiles/Project2.dir/nfa.c.o: ../IntHashSet.h
+CMakeFiles/Project2.dir/nfa.c.o: ../LinkedList.h
 CMakeFiles/Project2.dir/nfa.c.o: ../Set.h
+CMakeFiles/Project2.dir/nfa.c.o: ../dfa.h
 CMakeFiles/Project2.dir/nfa.c.o: ../nfa.c
 CMakeFiles/Project2.dir/nfa.c.o: ../nfa.h
 

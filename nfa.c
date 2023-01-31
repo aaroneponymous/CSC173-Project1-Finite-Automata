@@ -135,17 +135,60 @@ bool NFA_get_accepting(NFA nfa, int state)
  */
 bool NFA_execute(NFA nfa, char *input)
 {
-    // 1. I want to keep track of what Meta State I am in that
-    // gets updated only when I reach an accepting state
-    // 2. When executing the NFA, when I see an input symbol
-    // I want to find the set of states that I can go to
-    // from the 2-D array of sets i.e. transitionMatrix
-    // Once found, iterate through the set and follow the transitions
-    // 3. If I reach an accepting state, I want to update the meta state
-    // 4. If I reach the end of the input string, I want to check if the
-    // meta state is an accepting state
-    // 5. If it is, return true, else return false
+     // Create a set "temp" to store the current set of states.
+     Set *current= (Set *)malloc(sizeof(Set));
 
+     // Iterate through the input string:
+     // a. Get the current symbol from the input string.
+     // b. Initialize the "temp" set with the union of the set of states that can be reached from
+     // each state in the current set, given the current symbol.
+     // c. Replace the current set with the "temp" set.
+
+        for (int i = 0; input[i] != '\0'; i++)
+        {
+            // Get the current symbol from the input string.
+            char currentSymbol = input[i];
+            // Initialize the "temp" set with the union of the set of states that can be reached from
+            // each state in the current set, given the current symbol.
+            Set *temp = malloc(sizeof(Set));
+            temp = new_Set(1);
+            // Iterate through the current set of states
+            while(IntHashSet_iterator(current))
+            {
+                // Get the current state
+                int currentState = SetIterator_next(current);
+                // Get the set of states that can be reached from the current state
+                // given the current symbol
+                Set *nextStates =(Set *)malloc(sizeof(Set));
+                nextStates = NFA_get_transitions(nfa, currentState, currentSymbol);
+                // Union the "temp" set with the set of states that can be reached from the current state
+                // given the current symbol
+                Set_union(temp, nextStates);
+            }
+            // Replace the current set with the "temp" set.
+            current = temp;
+        }
+
+        // Check if any of the states in the current set is an accepting state
+        // Iterate through the current set of states
+        while(IntHashSet_iterator(current))
+        {
+            // Get the current state
+            int currentState = SetIterator_next(current);
+            // Check if the current state is an accepting state
+            if(NFA_get_accepting(nfa, currentState))
+            {
+                // Free the memory allocated for the current set
+                Set_free(current);
+                free(current);
+                return true;
+            }
+        }
+
+        // Free the memory allocated for the current set
+        Set_free(current);
+        free(current);
+        return false;
 }
 
 /**

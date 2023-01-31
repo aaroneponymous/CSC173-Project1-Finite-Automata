@@ -32,7 +32,7 @@ DFA new_DFA(int nstates)
 
 void DFA_free(DFA dfa)
 {
-    // Reverse Order of Memory Deallocation
+    // Reverse Order of Memory Deallocation *Important*
     // Free Memory Allocated for Symbols/Alphabets (ASCII) First
     for (int j = 0; j < dfa->noOfStates; j++)
     {

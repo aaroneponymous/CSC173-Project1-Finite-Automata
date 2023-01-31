@@ -6,7 +6,7 @@
 #include "makeDfaNfa.h"
 #include "dfa.h"
 
-// Create an extra dead state
+
 // DFA for exactly the string "Aho"
 DFA create_exactly_Aho()
 {
@@ -72,17 +72,28 @@ DFA create_odd_0_even_1()
     return odd0even1;
 }
 
+//matches strings that end in "man"
+NFA build_match_end_man(){
+    NFA endMAN = new_NFA(4);
+    NFA_add_transition_all(endMAN, 0,0);
+    NFA_add_transition(endMAN, 0, 'm', 1);
+    NFA_add_transition(endMAN, 1, 'a', 2);
+    NFA_add_transition(endMAN, 2, 'n', 3);
+    NFA_set_accepting(endMAN, 3, true);
+    return endMAN;
+}
+
 int main()
 {
 
-    char *str = "Aho";
-    // DFA for exactly the string "Aho"
-    // Execute the DFA on the command line
-    DFA exactlyAho = create_exactly_Aho();
-    // Withing the printf pass the DFA and the string in execute DFA function
-    // and print the result truth value
-    printf("Accepted? : %d", DFA_execute(exactlyAho, str));
-    DFA_free(exactlyAho);
+//    char *str = "Aho";
+//    // DFA for exactly the string "Aho"
+//    // Execute the DFA on the command line
+//    DFA exactlyAho = create_exactly_Aho();
+//    // Withing the printf pass the DFA and the string in execute DFA function
+//    // and print the result truth value
+//    printf("Accepted? : %d", DFA_execute(exactlyAho, str));
+//    DFA_free(exactlyAho);
 
 
 
@@ -98,6 +109,12 @@ int main()
     DFA starting123 = create_starting_1_or_2_or_3();
     printf("Accepted? : %d", DFA_execute(starting123, str));
     DFA_free(starting123);*/
+
+    // Test NFA: String that ends with man
+    char *str = "Heminman";
+    NFA man = build_match_end_man();
+    printf("Accepted? : %d", NFA_execute(man, str));
+    NFA_free(man);
 
 
     return 0;

@@ -43,14 +43,17 @@
 // and then iterate through the next set of states until the end of the string is reached
 // or the path ends (dead state/false state)
 
-// I'll try Recursion and then see what happens
+/** Final Decision: Just use the Set data structure to represent the set of states (Don't make it harder than its
+ supposed to be) */
+
+// I'll try Recursion and then see what happens(?)
 
 // What do I need in the struct NFA then?
 // 1. noOfStates as an int
 // 2. transition matrix as a 2-D array of sets of states (pointer to a pointer to a set of states)
 // 3. accepting states as a 1-D array of boolean values (pointer to a boolean)
 // 4. do I need an initial state tracker? That could potentially hold the value of the current state
-// while the recursion is happening?
+// while the recursion is happening? Current Set that stores possible sets of state transition should be dynamic!
 
 typedef struct NFA *NFA;
 
@@ -58,6 +61,7 @@ struct NFA
 {
     int noOfStates;
     // Pointer to a pointer to a set of states (LinkedList)
+    Set currentStates;
     Set **transitionMatrix;
     bool *acceptingStates;
 };

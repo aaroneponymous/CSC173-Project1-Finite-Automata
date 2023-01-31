@@ -14,6 +14,10 @@ stdbool.h
 stdbool.h
 -
 
+/mnt/c/Aaron's Folder/173Projects/Project2/LinkedList.h
+stdbool.h
+-
+
 /mnt/c/Aaron's Folder/173Projects/Project2/Set.h
 IntHashSet.h
 /mnt/c/Aaron's Folder/173Projects/Project2/IntHashSet.h
@@ -24,26 +28,6 @@ BitSet.h
 stdbool.h
 -
 
-/mnt/c/Aaron's Folder/173Projects/Project2/makeDfaNfa.c
-stdio.h
--
-stdlib.h
--
-stdbool.h
--
-string.h
--
-makeDfaNfa.h
-/mnt/c/Aaron's Folder/173Projects/Project2/makeDfaNfa.h
-dfa.h
-/mnt/c/Aaron's Folder/173Projects/Project2/dfa.h
-
-/mnt/c/Aaron's Folder/173Projects/Project2/makeDfaNfa.h
-dfa.h
-/mnt/c/Aaron's Folder/173Projects/Project2/dfa.h
-nfa.h
-/mnt/c/Aaron's Folder/173Projects/Project2/nfa.h
-
 /mnt/c/Aaron's Folder/173Projects/Project2/nfa.c
 stdio.h
 -
@@ -53,10 +37,16 @@ stdbool.h
 -
 nfa.h
 /mnt/c/Aaron's Folder/173Projects/Project2/nfa.h
+Set.h
+/mnt/c/Aaron's Folder/173Projects/Project2/Set.h
 
 /mnt/c/Aaron's Folder/173Projects/Project2/nfa.h
 stdbool.h
 -
 Set.h
 /mnt/c/Aaron's Folder/173Projects/Project2/Set.h
+LinkedList.h
+/mnt/c/Aaron's Folder/173Projects/Project2/LinkedList.h
+dfa.h
+/mnt/c/Aaron's Folder/173Projects/Project2/dfa.h
 
