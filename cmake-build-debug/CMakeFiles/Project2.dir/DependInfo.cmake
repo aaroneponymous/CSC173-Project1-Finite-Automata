@@ -9,6 +9,7 @@ set(CMAKE_DEPENDS_CHECK_C
   "/mnt/c/Aaron's Folder/173Projects/Project2/LinkedList.c" "/mnt/c/Aaron's Folder/173Projects/Project2/cmake-build-debug/CMakeFiles/Project2.dir/LinkedList.c.o"
   "/mnt/c/Aaron's Folder/173Projects/Project2/dfa.c" "/mnt/c/Aaron's Folder/173Projects/Project2/cmake-build-debug/CMakeFiles/Project2.dir/dfa.c.o"
   "/mnt/c/Aaron's Folder/173Projects/Project2/makeDfaNfa.c" "/mnt/c/Aaron's Folder/173Projects/Project2/cmake-build-debug/CMakeFiles/Project2.dir/makeDfaNfa.c.o"
+  "/mnt/c/Aaron's Folder/173Projects/Project2/nfa.c" "/mnt/c/Aaron's Folder/173Projects/Project2/cmake-build-debug/CMakeFiles/Project2.dir/nfa.c.o"
   "/mnt/c/Aaron's Folder/173Projects/Project2/strdup.c" "/mnt/c/Aaron's Folder/173Projects/Project2/cmake-build-debug/CMakeFiles/Project2.dir/strdup.c.o"
   )
 set(CMAKE_C_COMPILER_ID "GNU")

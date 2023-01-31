@@ -277,6 +277,33 @@ makeDfaNfa.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project2.dir/build.make CMakeFiles/Project2.dir/makeDfaNfa.c.s
 .PHONY : makeDfaNfa.c.s
 
+nfa.o: nfa.c.o
+
+.PHONY : nfa.o
+
+# target to build an object file
+nfa.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project2.dir/build.make CMakeFiles/Project2.dir/nfa.c.o
+.PHONY : nfa.c.o
+
+nfa.i: nfa.c.i
+
+.PHONY : nfa.i
+
+# target to preprocess a source file
+nfa.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project2.dir/build.make CMakeFiles/Project2.dir/nfa.c.i
+.PHONY : nfa.c.i
+
+nfa.s: nfa.c.s
+
+.PHONY : nfa.s
+
+# target to generate assembly for a file
+nfa.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project2.dir/build.make CMakeFiles/Project2.dir/nfa.c.s
+.PHONY : nfa.c.s
+
 strdup.o: strdup.c.o
 
 .PHONY : strdup.o
@@ -328,6 +355,9 @@ help:
 	@echo "... makeDfaNfa.o"
 	@echo "... makeDfaNfa.i"
 	@echo "... makeDfaNfa.s"
+	@echo "... nfa.o"
+	@echo "... nfa.i"
+	@echo "... nfa.s"
 	@echo "... strdup.o"
 	@echo "... strdup.i"
 	@echo "... strdup.s"

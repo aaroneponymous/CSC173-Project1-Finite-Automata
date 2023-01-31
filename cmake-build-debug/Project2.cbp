@@ -117,6 +117,9 @@
 		<Unit filename="/mnt/c/Aaron&apos;s Folder/173Projects/Project2/makeDfaNfa.h">
 			<Option target="Project2"/>
 		</Unit>
+		<Unit filename="/mnt/c/Aaron&apos;s Folder/173Projects/Project2/nfa.c">
+			<Option target="Project2"/>
+		</Unit>
 		<Unit filename="/mnt/c/Aaron&apos;s Folder/173Projects/Project2/nfa.h">
 			<Option target="Project2"/>
 		</Unit>

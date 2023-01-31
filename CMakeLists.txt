@@ -20,4 +20,4 @@ add_executable(Project2
         Set.h
         strdup.c
         strdup.h
-        )
+        nfa.c)

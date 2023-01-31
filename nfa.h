@@ -15,6 +15,28 @@
  * @see FOCS Section 10.3
  * @see Comments for DFA in dfa.h
  */
+
+// NFA Potential Implementation:
+// Withing the structure I can
+// 1. noOfStates as an int
+
+// 2. How do I represent the transition matrix with sets of states?
+// Once that is achieved, think about how do I follow the input symbol
+// to the sets of states, for each one of them follow to the end until of
+// the string is reached, or the path ends, and then check if the last state
+// is an accepting state or dead state (or leads to phi)
+
+// Represent a 2-D array with states as rows and symbols as columns
+// Each cell will be a set of states
+// What data structure to use for the set of states?
+// I can use a linked list of states, but will that be inefficient?
+
+// If I do use a linked list, for each state in a set of states, I will have to
+// iterate through the list one by one, and for each one of the list elements
+// potentially iterate through the transition matrix to find the next set of states
+// and iterate over them until the end of the string is reached or the path ends (dead state/false state)
+// and then go back to the initial state and iterate through the next element in the list
+// Use Recursion or
 typedef struct NFA *NFA;
 
 /**

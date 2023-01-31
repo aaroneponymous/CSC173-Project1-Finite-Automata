@@ -72,9 +72,9 @@ DFA create_odd_0_even_1()
     return odd0even1;
 }
 
-/*int main()
+int main()
 {
-*//*
+
     char *str = "Aho";
     // DFA for exactly the string "Aho"
     // Execute the DFA on the command line
@@ -83,22 +83,22 @@ DFA create_odd_0_even_1()
     // and print the result truth value
     printf("Accepted? : %d", DFA_execute(exactlyAho, str));
     DFA_free(exactlyAho);
-*//*
 
-*//*
-    // DFA for 1 2 3 in order Testing
+
+
+/*    // DFA for 1 2 3 in order Testing
     char *str = "3132";
     DFA order123 = create_order_1_2_3();
     printf("Accepted? : %d", DFA_execute(order123, str));
     DFA_free(order123);
-*//*
+
 
     // DFA for 1 or 2 or 3 at the start Testing
     char *str = "523";
     DFA starting123 = create_starting_1_or_2_or_3();
     printf("Accepted? : %d", DFA_execute(starting123, str));
-    DFA_free(starting123);
+    DFA_free(starting123);*/
 
 
     return 0;
-}*/
+}
