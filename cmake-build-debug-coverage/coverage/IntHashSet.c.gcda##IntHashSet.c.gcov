@@ -35,90 +35,90 @@
         -:   31:	int count;
         -:   32:};
         -:   33:
-function new_Node called 0 returned 0% blocks executed 0%
-    #####:   34:static Node* new_Node(int element) {
-    #####:   35:	Node* this = (Node*)malloc(sizeof(struct Node));
-    #####:   36:	this->element = element;
-    #####:   37:	this->next = NULL;
-    #####:   38:	return this;
-    %%%%%:   38-block  0
+function new_Node called 144 returned 100% blocks executed 100%
+      144:   34:static Node* new_Node(int element) {
+      144:   35:	Node* this = (Node*)malloc(sizeof(struct Node));
+      144:   36:	this->element = element;
+      144:   37:	this->next = NULL;
+      144:   38:	return this;
+      144:   38-block  0
         -:   39:}
         -:   40:
         -:   41:/**
         -:   42: * Allocate and return a new empty IntHashSet.
         -:   43: */
-function new_IntHashSet called 0 returned 0% blocks executed 0%
-    #####:   44:IntHashSet new_IntHashSet(int size) {
-    #####:   45:	IntHashSet this = (IntHashSet)malloc(sizeof(struct IntHashSet));
-    #####:   46:	if (this == NULL) {
-    %%%%%:   46-block  0
-branch  0 never executed
-branch  1 never executed
+function new_IntHashSet called 521 returned 100% blocks executed 86%
+      521:   44:IntHashSet new_IntHashSet(int size) {
+      521:   45:	IntHashSet this = (IntHashSet)malloc(sizeof(struct IntHashSet));
+      521:   46:	if (this == NULL) {
+      521:   46-block  0
+branch  0 taken 0 (fallthrough)
+branch  1 taken 521
     #####:   47:		return NULL;
     %%%%%:   47-block  0
         -:   48:	}
-    #####:   49:	this->size = size;
-    #####:   50:	this->buckets = (Node**)calloc(size, sizeof(Node*));
-    #####:   51:	for (int i=0; i < size; i++) {
-    %%%%%:   51-block  0
-    %%%%%:   51-block  1
-branch  0 never executed
-branch  1 never executed
-    #####:   52:		this->buckets[i] = NULL;
-    %%%%%:   52-block  0
+      521:   49:	this->size = size;
+      521:   50:	this->buckets = (Node**)calloc(size, sizeof(Node*));
+     2605:   51:	for (int i=0; i < size; i++) {
+      521:   51-block  0
+     2605:   51-block  1
+branch  0 taken 2084
+branch  1 taken 521 (fallthrough)
+     2084:   52:		this->buckets[i] = NULL;
+     2084:   52-block  0
         -:   53:	}
-    #####:   54:	this->count = 0;
-    #####:   55:	return this;
-    %%%%%:   55-block  0
+      521:   54:	this->count = 0;
+      521:   55:	return this;
+      521:   55-block  0
         -:   56:}
         -:   57:
         -:   58:/**
         -:   59: * Free the given IntHashSet.
         -:   60: */
-function IntHashSet_free called 0 returned 0% blocks executed 0%
-    #####:   61:void IntHashSet_free(IntHashSet this) {
-    #####:   62:	if (this == NULL) {
-    %%%%%:   62-block  0
-branch  0 never executed
-branch  1 never executed
-    #####:   63:		return;
-    %%%%%:   63-block  0
+function IntHashSet_free called 522 returned 100% blocks executed 100%
+      522:   61:void IntHashSet_free(IntHashSet this) {
+      522:   62:	if (this == NULL) {
+      522:   62-block  0
+branch  0 taken 1 (fallthrough)
+branch  1 taken 521
+        1:   63:		return;
+        1:   63-block  0
         -:   64:	}
         -:   65:	// Free all the nodes
-    #####:   66:	for (int index=0; index < this->size; index++) {
-    %%%%%:   66-block  0
-    %%%%%:   66-block  1
-    %%%%%:   66-block  2
-branch  0 never executed
-branch  1 never executed
-    #####:   67:		Node* p = this->buckets[index];
-    #####:   68:		while (p != NULL) {
-    %%%%%:   68-block  0
-    %%%%%:   68-block  1
-branch  0 never executed
-branch  1 never executed
-    #####:   69:			Node* next = p->next;
-    #####:   70:			free(p);
-    #####:   71:			p = next;
-    %%%%%:   71-block  0
+     2605:   66:	for (int index=0; index < this->size; index++) {
+      521:   66-block  0
+     2084:   66-block  1
+     2605:   66-block  2
+branch  0 taken 2084
+branch  1 taken 521 (fallthrough)
+     2084:   67:		Node* p = this->buckets[index];
+     2228:   68:		while (p != NULL) {
+     2084:   68-block  0
+     2228:   68-block  1
+branch  0 taken 144
+branch  1 taken 2084 (fallthrough)
+      144:   69:			Node* next = p->next;
+      144:   70:			free(p);
+      144:   71:			p = next;
+      144:   71-block  0
         -:   72:		}
         -:   73:	}
         -:   74:	// Free the hashtable (array of bucket list headers) itself
-    #####:   75:	free(this->buckets);
+      521:   75:	free(this->buckets);
         -:   76:	// Free the struct
-    #####:   77:	free(this);
-    %%%%%:   77-block  0
+      521:   77:	free(this);
+      521:   77-block  0
         -:   78:}
         -:   79:
         -:   80:/**
         -:   81: * Very simple hash function for IntHashSet.
         -:   82: * @see FOCS p415.
         -:   83: */
-function IntHashSet_hash called 0 returned 0% blocks executed 0%
-    #####:   84:static int IntHashSet_hash(IntHashSet this, int element) {
-    #####:   85:	int index = element % this->size;
-    #####:   86:	return index;
-    %%%%%:   86-block  0
+function IntHashSet_hash called 156 returned 100% blocks executed 100%
+      156:   84:static int IntHashSet_hash(IntHashSet this, int element) {
+      156:   85:	int index = element % this->size;
+      156:   86:	return index;
+      156:   86-block  0
         -:   87:}
         -:   88:
         -:   89:/**
@@ -133,24 +133,24 @@ function IntHashSet_hash called 0 returned 0% blocks executed 0%
         -:   98: * We return true if the element was added or false if it was
         -:   99: * already there, to support keeping track of the count of elements.
         -:  100: */
-function IntHashSet_bucketInsert called 0 returned 0% blocks executed 0%
-    #####:  101:static bool IntHashSet_bucketInsert(int element, Node** pL) {
-    #####:  102:	if ((*pL) == NULL) {
-    %%%%%:  102-block  0
-branch  0 never executed
-branch  1 never executed
+function IntHashSet_bucketInsert called 156 returned 100% blocks executed 75%
+      156:  101:static bool IntHashSet_bucketInsert(int element, Node** pL) {
+      156:  102:	if ((*pL) == NULL) {
+      156:  102-block  0
+branch  0 taken 144 (fallthrough)
+branch  1 taken 12
         -:  103:		// Not found in bucket: append
-    #####:  104:		(*pL) = new_Node(element);
-    %%%%%:  104-block  0
-call    0 never executed
-    #####:  105:		return true; // Yes added
-    #####:  106:	} else if ((*pL)->element == element) {
-    %%%%%:  106-block  0
-branch  0 never executed
-branch  1 never executed
+      144:  104:		(*pL) = new_Node(element);
+      144:  104-block  0
+call    0 returned 144
+      144:  105:		return true; // Yes added
+       12:  106:	} else if ((*pL)->element == element) {
+       12:  106-block  0
+branch  0 taken 12 (fallthrough)
+branch  1 taken 0
         -:  107:		// Found in bucket
-    #####:  108:		return false; // Not added
-    %%%%%:  108-block  0
+       12:  108:		return false; // Not added
+       12:  108-block  0
         -:  109:	} else {
         -:  110:		// Keep searching bucket
     #####:  111:		return IntHashSet_bucketInsert(element, &((*pL)->next));
@@ -163,19 +163,19 @@ call    0 never executed
         -:  116: * Insert the given element into the given IntHashSet if
         -:  117: * it isn't already present.
         -:  118: */
-function IntHashSet_insert called 0 returned 0% blocks executed 0%
-    #####:  119:void IntHashSet_insert(IntHashSet this, int element) {
-    #####:  120:	int index = IntHashSet_hash(this, element);
-    %%%%%:  120-block  0
-call    0 never executed
-    #####:  121:	if (IntHashSet_bucketInsert(element, &(this->buckets[index]))) {
-call    0 never executed
-branch  1 never executed
-branch  2 never executed
-    #####:  122:		this->count += 1;
-    %%%%%:  122-block  0
+function IntHashSet_insert called 156 returned 100% blocks executed 100%
+      156:  119:void IntHashSet_insert(IntHashSet this, int element) {
+      156:  120:	int index = IntHashSet_hash(this, element);
+      156:  120-block  0
+call    0 returned 156
+      156:  121:	if (IntHashSet_bucketInsert(element, &(this->buckets[index]))) {
+call    0 returned 156
+branch  1 taken 144 (fallthrough)
+branch  2 taken 12
+      144:  122:		this->count += 1;
+      144:  122-block  0
         -:  123:	}
-    #####:  124:}
+      156:  124:}
         -:  125:
         -:  126:/**
         -:  127: * Return true if the given element is in the given IntHashSet,
@@ -209,27 +209,27 @@ branch  1 never executed
         -:  143: * This will modify the first set unless the second set is empty or
         -:  144: * all its elements are already in the first set.
         -:  145: */
-function IntHashSet_union called 0 returned 0% blocks executed 0%
-    #####:  146:void IntHashSet_union(IntHashSet this, const IntHashSet other) {
+function IntHashSet_union called 19 returned 100% blocks executed 100%
+       19:  146:void IntHashSet_union(IntHashSet this, const IntHashSet other) {
         -:  147:	// Iterate over elements of other set, adding to this set
-    #####:  148:	for (int index=0; index < other->size; index++) {
-    %%%%%:  148-block  0
-    %%%%%:  148-block  1
-    %%%%%:  148-block  2
-branch  0 never executed
-branch  1 never executed
-    #####:  149:		for (Node* p=other->buckets[index]; p != NULL; p=p->next) {
-    %%%%%:  149-block  0
-    %%%%%:  149-block  1
-branch  0 never executed
-branch  1 never executed
-    #####:  150:			int element = p->element;
-    #####:  151:			IntHashSet_insert(this, element);
-    %%%%%:  151-block  0
-call    0 never executed
+       95:  148:	for (int index=0; index < other->size; index++) {
+       19:  148-block  0
+       76:  148-block  1
+       95:  148-block  2
+branch  0 taken 76
+branch  1 taken 19 (fallthrough)
+      100:  149:		for (Node* p=other->buckets[index]; p != NULL; p=p->next) {
+       76:  149-block  0
+      100:  149-block  1
+branch  0 taken 24
+branch  1 taken 76 (fallthrough)
+       24:  150:			int element = p->element;
+       24:  151:			IntHashSet_insert(this, element);
+       24:  151-block  0
+call    0 returned 24
         -:  152:		}
         -:  153:	}
-    #####:  154:}
+       19:  154:}
         -:  155:
         -:  156:/**
         -:  157: * Print the given IntHashSet to stdout.
@@ -374,25 +374,25 @@ call    0 never executed
         -:  239: * Return an IntHashSetIterator for the given IntHashSet.
         -:  240: * Don't forget to free() this when you're done iterating.
         -:  241: */
-function IntHashSet_iterator called 0 returned 0% blocks executed 0%
-    #####:  242:IntHashSetIterator IntHashSet_iterator(const IntHashSet this) {
-    #####:  243:	IntHashSetIterator iterator = (IntHashSetIterator)malloc(sizeof(struct IntHashSetIterator));
-    #####:  244:	iterator->set = this;
-    #####:  245:	iterator->count = 0;
-    #####:  246:	iterator->index = 0;
-    #####:  247:	iterator->node = this->buckets[0];
-    #####:  248:	return iterator;
-    %%%%%:  248-block  0
+function IntHashSet_iterator called 9 returned 100% blocks executed 100%
+        9:  242:IntHashSetIterator IntHashSet_iterator(const IntHashSet this) {
+        9:  243:	IntHashSetIterator iterator = (IntHashSetIterator)malloc(sizeof(struct IntHashSetIterator));
+        9:  244:	iterator->set = this;
+        9:  245:	iterator->count = 0;
+        9:  246:	iterator->index = 0;
+        9:  247:	iterator->node = this->buckets[0];
+        9:  248:	return iterator;
+        9:  248-block  0
         -:  249:}
         -:  250:
         -:  251:/**
         -:  252: * Return true if the next call to IntHashSetIterator_next on the given
         -:  253: * IntHashSetIterator will not fail.
         -:  254: */
-function IntHashSetIterator_hasNext called 0 returned 0% blocks executed 0%
-    #####:  255:bool IntHashSetIterator_hasNext(const IntHashSetIterator this) {
-    #####:  256:	return this->count < this->set->count;
-    %%%%%:  256-block  0
+function IntHashSetIterator_hasNext called 21 returned 100% blocks executed 100%
+       21:  255:bool IntHashSetIterator_hasNext(const IntHashSetIterator this) {
+       21:  256:	return this->count < this->set->count;
+       21:  256-block  0
         -:  257:}
         -:  258:
         -:  259:/**
@@ -400,30 +400,30 @@ function IntHashSetIterator_hasNext called 0 returned 0% blocks executed 0%
         -:  261: * IntHashSetIterator, or -1 if there is no such element (even though
         -:  262: * -1 could be a value in an IntHashSet).
         -:  263: */
-function IntHashSetIterator_next called 0 returned 0% blocks executed 0%
-    #####:  264:int IntHashSetIterator_next(IntHashSetIterator this) {
-    #####:  265:	while (this->node == NULL) {
-    %%%%%:  265-block  0
-    %%%%%:  265-block  1
-branch  0 never executed
-branch  1 never executed
-    #####:  266:		if (this->index >= this->set->size) {
-    %%%%%:  266-block  0
-branch  0 never executed
-branch  1 never executed
+function IntHashSetIterator_next called 13 returned 100% blocks executed 86%
+       13:  264:int IntHashSetIterator_next(IntHashSetIterator this) {
+       20:  265:	while (this->node == NULL) {
+       13:  265-block  0
+       20:  265-block  1
+branch  0 taken 7
+branch  1 taken 13 (fallthrough)
+        7:  266:		if (this->index >= this->set->size) {
+        7:  266-block  0
+branch  0 taken 0 (fallthrough)
+branch  1 taken 7
         -:  267:			// Not found!
     #####:  268:			return -1;
     %%%%%:  268-block  0
         -:  269:		}
-    #####:  270:		this->index += 1;
-    #####:  271:		this->node = this->set->buckets[this->index];
-    %%%%%:  271-block  0
+        7:  270:		this->index += 1;
+        7:  271:		this->node = this->set->buckets[this->index];
+        7:  271-block  0
         -:  272:	}
-    #####:  273:	int element = this->node->element;
-    #####:  274:	this->node = this->node->next;
-    #####:  275:	this->count += 1;
-    #####:  276:	return element;
-    %%%%%:  276-block  0
+       13:  273:	int element = this->node->element;
+       13:  274:	this->node = this->node->next;
+       13:  275:	this->count += 1;
+       13:  276:	return element;
+       13:  276-block  0
         -:  277:}
         -:  278:
         -:  279:/**

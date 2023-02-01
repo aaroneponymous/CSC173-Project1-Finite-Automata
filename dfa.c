@@ -137,6 +137,10 @@ bool DFA_execute(DFA dfa, char *input) // Good Idea to track the current state h
     // Get the truth value for the current state
     return DFA_get_accepting(dfa,currentState);
 }
+
+
+
+
 /*
  * Print the given DFA to System.out.
  */

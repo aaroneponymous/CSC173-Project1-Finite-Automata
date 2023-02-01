@@ -35,6 +35,8 @@ stdlib.h
 -
 stdbool.h
 -
+string.h
+-
 nfa.h
 /mnt/c/Aaron's Folder/173Projects/Project2/nfa.h
 Set.h

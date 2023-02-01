@@ -53,15 +53,15 @@
 // 2. transition matrix as a 2-D array of sets of states (pointer to a pointer to a set of states)
 // 3. accepting states as a 1-D array of boolean values (pointer to a boolean)
 // 4. do I need an initial state tracker? That could potentially hold the value of the current state
-// while the recursion is happening? Current Set that stores possible sets of state transition should be dynamic!
+// while the recursion is happening? Current Set that stores possible sets of state transition should be dynamic?
 
 typedef struct NFA *NFA;
 
 struct NFA
 {
     int noOfStates;
-    // Pointer to a pointer to a set of states (LinkedList)
-    Set currentStates;
+    // Pointer to a pointer to a set of states (Set)
+    Set currentStates; // Stack (Memory) --> Keep track of possible current states
     Set **transitionMatrix;
     bool *acceptingStates;
 };
@@ -118,6 +118,15 @@ extern bool NFA_get_accepting(NFA nfa, int state);
  * the input, otherwise false.
  */
 extern bool NFA_execute(NFA nfa, char *input);
+
+extern bool NFA_execute_helper(NFA nfa, char *input, int index);
+
+/*extern void NFA_REPL()
+{
+    char inputString [100];
+
+
+}*/
 
 /**
  * Print the given NFA to System.out.

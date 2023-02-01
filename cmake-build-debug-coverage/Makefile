@@ -250,32 +250,32 @@ dfa.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project2.dir/build.make CMakeFiles/Project2.dir/dfa.c.s
 .PHONY : dfa.c.s
 
-makeDfaNfa.o: makeDfaNfa.c.o
+main.o: main.c.o
 
-.PHONY : makeDfaNfa.o
+.PHONY : main.o
 
 # target to build an object file
-makeDfaNfa.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project2.dir/build.make CMakeFiles/Project2.dir/makeDfaNfa.c.o
-.PHONY : makeDfaNfa.c.o
+main.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project2.dir/build.make CMakeFiles/Project2.dir/main.c.o
+.PHONY : main.c.o
 
-makeDfaNfa.i: makeDfaNfa.c.i
+main.i: main.c.i
 
-.PHONY : makeDfaNfa.i
+.PHONY : main.i
 
 # target to preprocess a source file
-makeDfaNfa.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project2.dir/build.make CMakeFiles/Project2.dir/makeDfaNfa.c.i
-.PHONY : makeDfaNfa.c.i
+main.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project2.dir/build.make CMakeFiles/Project2.dir/main.c.i
+.PHONY : main.c.i
 
-makeDfaNfa.s: makeDfaNfa.c.s
+main.s: main.c.s
 
-.PHONY : makeDfaNfa.s
+.PHONY : main.s
 
 # target to generate assembly for a file
-makeDfaNfa.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project2.dir/build.make CMakeFiles/Project2.dir/makeDfaNfa.c.s
-.PHONY : makeDfaNfa.c.s
+main.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project2.dir/build.make CMakeFiles/Project2.dir/main.c.s
+.PHONY : main.c.s
 
 nfa.o: nfa.c.o
 
@@ -352,9 +352,9 @@ help:
 	@echo "... dfa.o"
 	@echo "... dfa.i"
 	@echo "... dfa.s"
-	@echo "... makeDfaNfa.o"
-	@echo "... makeDfaNfa.i"
-	@echo "... makeDfaNfa.s"
+	@echo "... main.o"
+	@echo "... main.i"
+	@echo "... main.s"
 	@echo "... nfa.o"
 	@echo "... nfa.i"
 	@echo "... nfa.s"

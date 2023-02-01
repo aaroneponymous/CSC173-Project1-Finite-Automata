@@ -14,55 +14,55 @@
         -:   10:
         -:   11:
         -:   12:// Constructor for a new DFA
-function new_DFA called 1 returned 100% blocks executed 100%
-        1:   13:DFA new_DFA(int nstates)
+function new_DFA called 0 returned 0% blocks executed 0%
+    #####:   13:DFA new_DFA(int nstates)
         -:   14:{
-        1:   15:    DFA newDFA = (DFA)malloc(sizeof(struct DFA));
-        1:   16:    newDFA->noOfStates = nstates;
+    #####:   15:    DFA newDFA = (DFA)malloc(sizeof(struct DFA));
+    #####:   16:    newDFA->noOfStates = nstates;
         -:   17:
         -:   18:    // Memory Allocation for Transition Table
-        1:   19:    newDFA->transitionMatrix = (int**)malloc(nstates * sizeof(int*));
-        5:   20:    for (int i = 0; i < nstates; i++)
-        1:   20-block  0
-        5:   20-block  1
-branch  0 taken 4
-branch  1 taken 1 (fallthrough)
+    #####:   19:    newDFA->transitionMatrix = (int**)malloc(nstates * sizeof(int*));
+    #####:   20:    for (int i = 0; i < nstates; i++)
+    %%%%%:   20-block  0
+    %%%%%:   20-block  1
+branch  0 never executed
+branch  1 never executed
         -:   21:    {
-        4:   22:            newDFA->transitionMatrix[i] = (int *) malloc(ASCII_SIZE * sizeof(int));
-        4:   22-block  0
+    #####:   22:            newDFA->transitionMatrix[i] = (int *) malloc(ASCII_SIZE * sizeof(int));
+    %%%%%:   22-block  0
         -:   23:    }
         -:   24:
         -:   25:    // Memory Allocation for Accepting States - Use Calloc
         -:   26:    // Initialize Values to 0 (False)
-        1:   27:    newDFA->acceptingStates = (bool*)calloc(nstates, sizeof(_Bool));
+    #####:   27:    newDFA->acceptingStates = (bool*)calloc(nstates, sizeof(_Bool));
         -:   28:
-        1:   29:    return newDFA;
-        1:   29-block  0
+    #####:   29:    return newDFA;
+    %%%%%:   29-block  0
         -:   30:
         -:   31:}
         -:   32:
-function DFA_free called 1 returned 100% blocks executed 100%
-        1:   33:void DFA_free(DFA dfa)
+function DFA_free called 0 returned 0% blocks executed 0%
+    #####:   33:void DFA_free(DFA dfa)
         -:   34:{
-        -:   35:    // Reverse Order of Memory Deallocation
+        -:   35:    // Reverse Order of Memory Deallocation *Important*
         -:   36:    // Free Memory Allocated for Symbols/Alphabets (ASCII) First
-        5:   37:    for (int j = 0; j < dfa->noOfStates; j++)
-        1:   37-block  0
-        5:   37-block  1
-branch  0 taken 4
-branch  1 taken 1 (fallthrough)
+    #####:   37:    for (int j = 0; j < dfa->noOfStates; j++)
+    %%%%%:   37-block  0
+    %%%%%:   37-block  1
+branch  0 never executed
+branch  1 never executed
         -:   38:    {
-        4:   39:        free(dfa->transitionMatrix[j]); // Does for each pointer to pointer
-        4:   39-block  0
+    #####:   39:        free(dfa->transitionMatrix[j]); // Does for each pointer to pointer
+    %%%%%:   39-block  0
         -:   40:    }
         -:   41:    // Then Free Memory Allocated for Transition Table (States)
-        1:   42:    free(dfa->transitionMatrix); // Does for the first pointer
+    #####:   42:    free(dfa->transitionMatrix); // Does for the first pointer
         -:   43:    // Free Memory Allocated for Accepting States
-        1:   44:    free(dfa->acceptingStates);
+    #####:   44:    free(dfa->acceptingStates);
         -:   45:    // Free Memory Allocated for DFA
-        1:   46:    free(dfa);
+    #####:   46:    free(dfa);
         -:   47:
-        1:   48:}
+    #####:   48:}
         -:   49:
         -:   50:/*
         -:   51: * Return the number of states in the given DFA.
@@ -79,22 +79,22 @@ function DFA_get_size called 0 returned 0% blocks executed 0%
         -:   60: * Return the state specified by the given DFA's transition function from
         -:   61: * state src on input symbol sym.
         -:   62: */
-function DFA_get_transition called 4 returned 100% blocks executed 100%
-        4:   63:int DFA_get_transition(DFA dfa, int src, char sym)
+function DFA_get_transition called 0 returned 0% blocks executed 0%
+    #####:   63:int DFA_get_transition(DFA dfa, int src, char sym)
         -:   64:{
-        4:   65:    return dfa->transitionMatrix[src][sym];
-        4:   65-block  0
+    #####:   65:    return dfa->transitionMatrix[src][sym];
+    %%%%%:   65-block  0
         -:   66:}
         -:   67:
         -:   68:/*
         -:   69: * For the given DFA, set the transition from state src on input symbol
         -:   70: * sym to be the state dst.
         -:   71: */
-function DFA_set_transition called 3 returned 100% blocks executed 100%
-        3:   72:void DFA_set_transition(DFA dfa, int src, char sym, int dst)
+function DFA_set_transition called 0 returned 0% blocks executed 0%
+    #####:   72:void DFA_set_transition(DFA dfa, int src, char sym, int dst)
         -:   73:{
-        3:   74:    dfa->transitionMatrix[src][sym] = dst;
-        3:   75:}
+    #####:   74:    dfa->transitionMatrix[src][sym] = dst;
+    #####:   75:}
         -:   76:
         -:   77:/*
         -:   78: * Set the transitions of the given DFA for each symbol in the given str.
@@ -124,116 +124,120 @@ branch  1 never executed
         -:   96: * Set the transitions of the given DFA for all input symbols.
         -:   97: * Another shortcut method.
         -:   98: */
-function DFA_set_transition_all called 4 returned 100% blocks executed 100%
-        4:   99:void DFA_set_transition_all(DFA dfa, int src, int dst)
+function DFA_set_transition_all called 0 returned 0% blocks executed 0%
+    #####:   99:void DFA_set_transition_all(DFA dfa, int src, int dst)
         -:  100:{
-      516:  101:    for(int i = 0; i < ASCII_SIZE; i++)
-        4:  101-block  0
-      516:  101-block  1
-branch  0 taken 512
-branch  1 taken 4 (fallthrough)
+    #####:  101:    for(int i = 0; i < ASCII_SIZE; i++)
+    %%%%%:  101-block  0
+    %%%%%:  101-block  1
+branch  0 never executed
+branch  1 never executed
         -:  102:    {
-      512:  103:        dfa->transitionMatrix[src][i] = dst;
-      512:  103-block  0
+    #####:  103:        dfa->transitionMatrix[src][i] = dst;
+    %%%%%:  103-block  0
         -:  104:    }
-        4:  105:}
+    #####:  105:}
         -:  106:
         -:  107:/*
         -:  108: * Set whether the given DFA's state is accepting or not.
         -:  109: */
-function DFA_set_accepting called 1 returned 100% blocks executed 100%
-        1:  110:void DFA_set_accepting(DFA dfa, int state, bool value)
+function DFA_set_accepting called 0 returned 0% blocks executed 0%
+    #####:  110:void DFA_set_accepting(DFA dfa, int state, bool value)
         -:  111:{
-        1:  112:    dfa->acceptingStates[state] = value;
-        1:  113:}
+    #####:  112:    dfa->acceptingStates[state] = value;
+    #####:  113:}
         -:  114:
         -:  115:/*
         -:  116: * Return true if the given DFA's state is an accepting state.
         -:  117: */
-function DFA_get_accepting called 1 returned 100% blocks executed 100%
-        1:  118:bool DFA_get_accepting(DFA dfa, int state)
+function DFA_get_accepting called 0 returned 0% blocks executed 0%
+    #####:  118:bool DFA_get_accepting(DFA dfa, int state)
         -:  119:{
-        1:  120:    return dfa->acceptingStates[state];
-        1:  120-block  0
+    #####:  120:    return dfa->acceptingStates[state];
+    %%%%%:  120-block  0
         -:  121:}
         -:  122:
         -:  123:/*
         -:  124: * Run the given DFA on the given input string, and return true if it accepts
         -:  125: * the input, otherwise false.
         -:  126: */
-function DFA_execute called 1 returned 100% blocks executed 100%
-        1:  127:bool DFA_execute(DFA dfa, char *input) // Good Idea to track the current state here
+function DFA_execute called 0 returned 0% blocks executed 0%
+    #####:  127:bool DFA_execute(DFA dfa, char *input) // Good Idea to track the current state here
         -:  128:{
-        1:  129:    int currentState = 0;
+    #####:  129:    int currentState = 0;
         -:  130:    // Iterate over the input string
-        5:  131:    for(int i = 0; i < strlen(input); i++)
-        1:  131-block  0
-        5:  131-block  1
-branch  0 taken 4
-branch  1 taken 1 (fallthrough)
+    #####:  131:    for(int i = 0; i < strlen(input); i++)
+    %%%%%:  131-block  0
+    %%%%%:  131-block  1
+branch  0 never executed
+branch  1 never executed
         -:  132:    {
         -:  133:        // Track Current State Changes and store
-        4:  134:        currentState = DFA_get_transition(dfa,currentState,input[i]);
-        4:  134-block  0
-call    0 returned 4
+    #####:  134:        currentState = DFA_get_transition(dfa,currentState,input[i]);
+    %%%%%:  134-block  0
+call    0 never executed
         -:  135:    }
         -:  136:
         -:  137:    // Get the truth value for the current state
-        1:  138:    return DFA_get_accepting(dfa,currentState);
-        1:  138-block  0
-call    0 returned 1
+    #####:  138:    return DFA_get_accepting(dfa,currentState);
+    %%%%%:  138-block  0
+call    0 never executed
         -:  139:}
-        -:  140:/*
-        -:  141: * Print the given DFA to System.out.
-        -:  142: */
-        -:  143:void DFA_print(DFA dfa);
-        -:  144:
-        -:  145:/*
-        -:  146:int main()
-        -:  147:{
-        -:  148:    struct DFA *testDFA = new_DFA(10);
-        -:  149:    // Testing
-        -:  150:    // Set States
-        -:  151:    DFA_set_transition(testDFA, 0, 'a', 1);
-        -:  152:    DFA_set_transition(testDFA, 1, 'b', 2);
-        -:  153:    DFA_set_transition(testDFA, 2, 'c', 3);
-        -:  154:    DFA_set_transition(testDFA, 3, 'd', 4);
-        -:  155:    DFA_set_transition(testDFA, 4, 'e', 5);
-        -:  156:
-        -:  157:
-        -:  158:    DFA_set_accepting(testDFA, 5, 1);
-        -:  159:
+        -:  140:
+        -:  141:
+        -:  142:
+        -:  143:
+        -:  144:/*
+        -:  145: * Print the given DFA to System.out.
+        -:  146: */
+        -:  147:void DFA_print(DFA dfa);
+        -:  148:
+        -:  149:/*
+        -:  150:int main()
+        -:  151:{
+        -:  152:    struct DFA *testDFA = new_DFA(10);
+        -:  153:    // Testing
+        -:  154:    // Set States
+        -:  155:    DFA_set_transition(testDFA, 0, 'a', 1);
+        -:  156:    DFA_set_transition(testDFA, 1, 'b', 2);
+        -:  157:    DFA_set_transition(testDFA, 2, 'c', 3);
+        -:  158:    DFA_set_transition(testDFA, 3, 'd', 4);
+        -:  159:    DFA_set_transition(testDFA, 4, 'e', 5);
         -:  160:
         -:  161:
-        -:  162:    // Use Print Statements to Test
-        -:  163:    // Get Transition Method
-        -:  164:    printf("Transition from State 0 on Symbol 'a' is %d \n", DFA_get_transition(testDFA, 0, 'a'));
+        -:  162:    DFA_set_accepting(testDFA, 5, 1);
+        -:  163:
+        -:  164:
         -:  165:
-        -:  166:    printf("Transition from State 0 on Symbol 'b' is %d \n", DFA_get_transition(testDFA, 1, 'b'));
-        -:  167:
-        -:  168:    printf("Transition from State 0 on Symbol 'c' is %d \n", DFA_get_transition(testDFA, 2, 'c'));
+        -:  166:    // Use Print Statements to Test
+        -:  167:    // Get Transition Method
+        -:  168:    printf("Transition from State 0 on Symbol 'a' is %d \n", DFA_get_transition(testDFA, 0, 'a'));
         -:  169:
-        -:  170:*/
-        -:  171:/*    // Test DFA_set_transition_all method
-        -:  172:    DFA_set_transition_all(testDFA, 6, 7);
+        -:  170:    printf("Transition from State 0 on Symbol 'b' is %d \n", DFA_get_transition(testDFA, 1, 'b'));
+        -:  171:
+        -:  172:    printf("Transition from State 0 on Symbol 'c' is %d \n", DFA_get_transition(testDFA, 2, 'c'));
         -:  173:
-        -:  174:    // Print the transitions for each symbol on state 6
-        -:  175:    for(int i = 0; i < ASCII_SIZE; i++)
-        -:  176:    {
-        -:  177:        printf("Transition from State 6 on Symbol '%c' is %d \n", i, DFA_get_transition(testDFA, 6, i));
-        -:  178:    }*//*
-        -:  179:
-        -:  180:
-        -:  181:
-        -:  182:    // Test Get Accepting Method
-        -:  183:    printf("State 5 is accepting? %d \n", DFA_get_accepting(testDFA, 5));
+        -:  174:*/
+        -:  175:/*    // Test DFA_set_transition_all method
+        -:  176:    DFA_set_transition_all(testDFA, 6, 7);
+        -:  177:
+        -:  178:    // Print the transitions for each symbol on state 6
+        -:  179:    for(int i = 0; i < ASCII_SIZE; i++)
+        -:  180:    {
+        -:  181:        printf("Transition from State 6 on Symbol '%c' is %d \n", i, DFA_get_transition(testDFA, 6, i));
+        -:  182:    }*//*
+        -:  183:
         -:  184:
         -:  185:
-        -:  186:    DFA_free(testDFA);
-        -:  187:
+        -:  186:    // Test Get Accepting Method
+        -:  187:    printf("State 5 is accepting? %d \n", DFA_get_accepting(testDFA, 5));
         -:  188:
-        -:  189:    return 0;
-        -:  190:}
-        -:  191:*/
+        -:  189:
+        -:  190:    DFA_free(testDFA);
+        -:  191:
         -:  192:
-        -:  193:
+        -:  193:    return 0;
+        -:  194:}
+        -:  195:*/
+        -:  196:
+        -:  197:

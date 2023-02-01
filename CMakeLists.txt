@@ -6,8 +6,8 @@ set(CMAKE_C_STANDARD 99)
 include_directories(.)
 
 add_executable(Project2
-        makeDfaNfa.c
-        makeDfaNfa.h
+        main.c
+        main.h
         BitSet.c
         BitSet.h
         dfa.c

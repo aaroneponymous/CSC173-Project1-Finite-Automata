@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <string.h>
 #include "nfa.h"
 #include "Set.h"
 
@@ -14,7 +15,10 @@ NFA new_NFA(int nstates)
 {
     // Allocate memory for the NFA struct
     NFA nfa = (NFA)malloc(sizeof(struct NFA));
+
+    // Initialize the fields
     nfa->noOfStates = nstates;
+    nfa->currentStates = NULL;
     // Allocate memory for Transition Matrix has a Set of states
     nfa->transitionMatrix = (Set**)malloc(nstates * sizeof(Set*));
     // Allocate memory for each state
@@ -22,7 +26,15 @@ NFA new_NFA(int nstates)
     // Should I set the head to null(?) or is it already null?
     for (int i = 0; i < nstates; i++)
     {
-        nfa->transitionMatrix[i] = (Set *) malloc(ASCII_SIZE * sizeof(Set));
+        nfa->transitionMatrix[i] = (Set *)malloc(ASCII_SIZE * sizeof(Set));
+    }
+    // Initialize the transition matrix Sets to set with nstates int
+    for (int i = 0; i < nstates; i++)
+    {
+        for (int j = 0; j < ASCII_SIZE; j++)
+        {
+            nfa->transitionMatrix[i][j] = new_Set(nstates);
+        }
     }
     // Allocate memory for Accepting States
     nfa->acceptingStates = (bool*)calloc(nstates, sizeof(_Bool));
@@ -45,11 +57,15 @@ void NFA_free(NFA nfa)
         {
             // Free the Set
             Set_free(nfa->transitionMatrix[i][j]);
+            nfa->transitionMatrix[i][j] = NULL;
             free(nfa->transitionMatrix[i][j]);
         }
-        free(nfa->transitionMatrix[i]);
+
+            nfa->transitionMatrix[i] = NULL;
     }
     free(nfa->transitionMatrix);
+    // Free the memory allocated for the current states Set
+    Set_free(nfa->currentStates);
     // Free the memory allocated for the accepting states
     free(nfa->acceptingStates);
     // Free the memory allocated for the NFA
@@ -80,8 +96,6 @@ Set NFA_get_transitions(NFA nfa, int state, char sym)
  */
 void NFA_add_transition(NFA nfa, int src, char sym, int dst)
 {
-    // Add the state to the set of next states
-    // from state src on input symbol sym
         Set_insert(nfa->transitionMatrix[src][sym], dst);
 }
 
@@ -109,6 +123,7 @@ void NFA_add_transition_all(NFA nfa, int src, int dst)
     for (int i = 0; i < ASCII_SIZE; i++)
     {
         // Set Insert
+
         Set_insert(nfa->transitionMatrix[src][i], dst);
     }
 }
@@ -129,70 +144,124 @@ bool NFA_get_accepting(NFA nfa, int state)
     return nfa->acceptingStates[state];
 }
 
-/*
- * Run the given NFA on the given input string, and return true if it accepts
- * the input, otherwise false.
- */
 bool NFA_execute(NFA nfa, char *input)
 {
-     // Create a set "temp" to store the current set of states.
-     Set *current= (Set *)malloc(sizeof(Set));
+    if(!nfa->currentStates) {
+        Set_free(nfa->currentStates);
+    }
+    nfa->currentStates = new_Set(nfa->noOfStates);
+    Set_insert(nfa->currentStates, 0);
+    return NFA_execute_helper(nfa, input, 0);
 
-     // Iterate through the input string:
-     // a. Get the current symbol from the input string.
-     // b. Initialize the "temp" set with the union of the set of states that can be reached from
-     // each state in the current set, given the current symbol.
-     // c. Replace the current set with the "temp" set.
+}
 
-        for (int i = 0; input[i] != '\0'; i++)
-        {
-            // Get the current symbol from the input string.
-            char currentSymbol = input[i];
-            // Initialize the "temp" set with the union of the set of states that can be reached from
-            // each state in the current set, given the current symbol.
-            Set *temp = malloc(sizeof(Set));
-            temp = new_Set(1);
-            // Iterate through the current set of states
-            while(IntHashSet_iterator(current))
-            {
-                // Get the current state
-                int currentState = SetIterator_next(current);
-                // Get the set of states that can be reached from the current state
-                // given the current symbol
-                Set *nextStates =(Set *)malloc(sizeof(Set));
-                nextStates = NFA_get_transitions(nfa, currentState, currentSymbol);
-                // Union the "temp" set with the set of states that can be reached from the current state
-                // given the current symbol
-                Set_union(temp, nextStates);
-            }
-            // Replace the current set with the "temp" set.
-            current = temp;
-        }
-
-        // Check if any of the states in the current set is an accepting state
-        // Iterate through the current set of states
-        while(IntHashSet_iterator(current))
-        {
-            // Get the current state
-            int currentState = SetIterator_next(current);
-            // Check if the current state is an accepting state
-            if(NFA_get_accepting(nfa, currentState))
-            {
-                // Free the memory allocated for the current set
-                Set_free(current);
-                free(current);
+// Recursively go through the input string and check if the current states
+// are accepting states
+bool NFA_execute_helper(NFA nfa, char *input, int index) {
+    if (input[index] == '\0') {
+        SetIterator acceptIter = Set_iterator(nfa->currentStates);
+        while (SetIterator_hasNext(acceptIter)) {
+            int cur = SetIterator_next(acceptIter);
+            if (nfa->acceptingStates[cur] == true) {
+                free(acceptIter);
                 return true;
             }
         }
-
-        // Free the memory allocated for the current set
-        Set_free(current);
-        free(current);
+        free(acceptIter);
         return false;
+    }
+
+    Set temp = new_Set(nfa->noOfStates);
+    SetIterator currIter = Set_iterator(nfa->currentStates);
+
+    while (SetIterator_hasNext(currIter)) {
+        int curr = SetIterator_next(currIter);
+        Set_union(temp, NFA_get_transitions(nfa, curr, input[index]));
+    }
+    free(currIter);
+    Set_free(nfa->currentStates);
+    nfa->currentStates = temp;
+    Set_union(nfa->currentStates, temp);
+
+    return NFA_execute_helper(nfa, input, index + 1);
 }
+
+
+void NFA_REPL();
+
 
 /**
  * Print the given NFA to System.out.
  */
 void NFA_print(NFA nfa);
+
+
+/*
+ * Run the given NFA on the given input string, and return true if it accepts
+ * the input, otherwise false.
+ */
+/*bool NFA_execute(NFA nfa, char *input)
+{
+    // How do I run branches?
+    // Iterate through the input string
+    // For each character, get the transitions and add them to the potential
+    // next states and iterate through the next states and repeat the process
+    // while unionizing the next states with the current states
+    // If the current states is empty, return false
+    // If the current states is not empty, iterate through the current states
+    // and check if any of them are accepting states
+    // If any of them are accepting states, return true
+    // If none of them are accepting states, return false
+
+    Set potentialNextStates;
+    Set_insert(potentialNextStates, 0);
+    SetIterator iter;
+    int symbol, curr;
+    bool truthValue = false;
+
+    // So first Iteration should get all the potential current states
+    // and store it into potentialNextStates
+    for(int i = 0; i < strlen(input); i++)
+    {
+        symbol = input[i];
+        iter = Set_iterator(potentialNextStates);
+
+        while (SetIterator_hasNext(iter)) // Pulls out the initial state the first time
+        {
+            curr = SetIterator_next(iter);
+            Set_union(potentialNextStates, NFA_get_transitions(nfa, curr, symbol));
+        }
+
+        // Free the current states
+        Set_free(nfa->currentStates);
+        // Set the current states to the potential next states
+        nfa->currentStates = potentialNextStates;
+
+        // Free the potential next states
+        Set_free(potentialNextStates);
+    }
+
+    // Free potentialNextStates after use
+    Set_free(potentialNextStates);
+
+    // If the current states is not empty, iterate through the current states
+    // and check if any of them are accepting states
+    iter = Set_iterator(nfa->currentStates);
+    while(SetIterator_hasNext(iter)){
+        curr = SetIterator_next(iter);
+        if(nfa->transitionMatrix[curr]==true){
+            truthValue = true;
+            break;
+        }
+    }
+
+    // Free the iterator
+    Set_free(iter);
+    Set_free(nfa->currentStates);
+    free(nfa);
+    return truthValue;
+
+}*/
+
+
 

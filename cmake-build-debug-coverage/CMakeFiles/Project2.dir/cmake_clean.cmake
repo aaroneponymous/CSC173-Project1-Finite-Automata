@@ -3,7 +3,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/Project2.dir/IntHashSet.c.o"
   "CMakeFiles/Project2.dir/LinkedList.c.o"
   "CMakeFiles/Project2.dir/dfa.c.o"
-  "CMakeFiles/Project2.dir/makeDfaNfa.c.o"
+  "CMakeFiles/Project2.dir/main.c.o"
   "CMakeFiles/Project2.dir/nfa.c.o"
   "CMakeFiles/Project2.dir/strdup.c.o"
   "Project2"

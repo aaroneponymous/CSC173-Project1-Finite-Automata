@@ -76,18 +76,18 @@ include CMakeFiles/Project2.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/Project2.dir/flags.make
 
-CMakeFiles/Project2.dir/makeDfaNfa.c.o: CMakeFiles/Project2.dir/flags.make
-CMakeFiles/Project2.dir/makeDfaNfa.c.o: ../makeDfaNfa.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/mnt/c/Aaron's Folder/173Projects/Project2/cmake-build-debug-coverage/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/Project2.dir/makeDfaNfa.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/Project2.dir/makeDfaNfa.c.o -c "/mnt/c/Aaron's Folder/173Projects/Project2/makeDfaNfa.c"
+CMakeFiles/Project2.dir/main.c.o: CMakeFiles/Project2.dir/flags.make
+CMakeFiles/Project2.dir/main.c.o: ../main.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/mnt/c/Aaron's Folder/173Projects/Project2/cmake-build-debug-coverage/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/Project2.dir/main.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/Project2.dir/main.c.o -c "/mnt/c/Aaron's Folder/173Projects/Project2/main.c"
 
-CMakeFiles/Project2.dir/makeDfaNfa.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/Project2.dir/makeDfaNfa.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E "/mnt/c/Aaron's Folder/173Projects/Project2/makeDfaNfa.c" > CMakeFiles/Project2.dir/makeDfaNfa.c.i
+CMakeFiles/Project2.dir/main.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/Project2.dir/main.c.i"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E "/mnt/c/Aaron's Folder/173Projects/Project2/main.c" > CMakeFiles/Project2.dir/main.c.i
 
-CMakeFiles/Project2.dir/makeDfaNfa.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/Project2.dir/makeDfaNfa.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S "/mnt/c/Aaron's Folder/173Projects/Project2/makeDfaNfa.c" -o CMakeFiles/Project2.dir/makeDfaNfa.c.s
+CMakeFiles/Project2.dir/main.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/Project2.dir/main.c.s"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S "/mnt/c/Aaron's Folder/173Projects/Project2/main.c" -o CMakeFiles/Project2.dir/main.c.s
 
 CMakeFiles/Project2.dir/BitSet.c.o: CMakeFiles/Project2.dir/flags.make
 CMakeFiles/Project2.dir/BitSet.c.o: ../BitSet.c
@@ -169,7 +169,7 @@ CMakeFiles/Project2.dir/nfa.c.s: cmake_force
 
 # Object files for target Project2
 Project2_OBJECTS = \
-"CMakeFiles/Project2.dir/makeDfaNfa.c.o" \
+"CMakeFiles/Project2.dir/main.c.o" \
 "CMakeFiles/Project2.dir/BitSet.c.o" \
 "CMakeFiles/Project2.dir/dfa.c.o" \
 "CMakeFiles/Project2.dir/IntHashSet.c.o" \
@@ -180,7 +180,7 @@ Project2_OBJECTS = \
 # External object files for target Project2
 Project2_EXTERNAL_OBJECTS =
 
-Project2: CMakeFiles/Project2.dir/makeDfaNfa.c.o
+Project2: CMakeFiles/Project2.dir/main.c.o
 Project2: CMakeFiles/Project2.dir/BitSet.c.o
 Project2: CMakeFiles/Project2.dir/dfa.c.o
 Project2: CMakeFiles/Project2.dir/IntHashSet.c.o
