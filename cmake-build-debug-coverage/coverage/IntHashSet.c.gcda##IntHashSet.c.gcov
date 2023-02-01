@@ -75,22 +75,22 @@ branch  1 taken 521 (fallthrough)
         -:   58:/**
         -:   59: * Free the given IntHashSet.
         -:   60: */
-function IntHashSet_free called 522 returned 100% blocks executed 100%
-      522:   61:void IntHashSet_free(IntHashSet this) {
-      522:   62:	if (this == NULL) {
-      522:   62-block  0
+function IntHashSet_free called 526 returned 100% blocks executed 100%
+      526:   61:void IntHashSet_free(IntHashSet this) {
+      526:   62:	if (this == NULL) {
+      526:   62-block  0
 branch  0 taken 1 (fallthrough)
-branch  1 taken 521
+branch  1 taken 525
         1:   63:		return;
         1:   63-block  0
         -:   64:	}
         -:   65:	// Free all the nodes
-     2605:   66:	for (int index=0; index < this->size; index++) {
-      521:   66-block  0
+     2609:   66:	for (int index=0; index < this->size; index++) {
+      525:   66-block  0
      2084:   66-block  1
-     2605:   66-block  2
+     2609:   66-block  2
 branch  0 taken 2084
-branch  1 taken 521 (fallthrough)
+branch  1 taken 525 (fallthrough)
      2084:   67:		Node* p = this->buckets[index];
      2228:   68:		while (p != NULL) {
      2084:   68-block  0
@@ -104,10 +104,10 @@ branch  1 taken 2084 (fallthrough)
         -:   72:		}
         -:   73:	}
         -:   74:	// Free the hashtable (array of bucket list headers) itself
-      521:   75:	free(this->buckets);
+      525:   75:	free(this->buckets);
         -:   76:	// Free the struct
-      521:   77:	free(this);
-      521:   77-block  0
+      525:   77:	free(this);
+      525:   77-block  0
         -:   78:}
         -:   79:
         -:   80:/**

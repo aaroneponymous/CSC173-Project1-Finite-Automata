@@ -61,7 +61,7 @@ struct NFA
 {
     int noOfStates;
     // Pointer to a pointer to a set of states (Set)
-    Set currentStates; // Stack (Memory) --> Keep track of possible current states
+    Set currentStates; //--> Keep track of possible current states
     Set **transitionMatrix;
     bool *acceptingStates;
 };

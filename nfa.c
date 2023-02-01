@@ -61,7 +61,9 @@ void NFA_free(NFA nfa)
             free(nfa->transitionMatrix[i][j]);
         }
 
+            Set_free(nfa->transitionMatrix[i]);
             nfa->transitionMatrix[i] = NULL;
+            free(nfa->transitionMatrix[i]);
     }
     free(nfa->transitionMatrix);
     // Free the memory allocated for the current states Set
@@ -187,15 +189,6 @@ bool NFA_execute_helper(NFA nfa, char *input, int index) {
 }
 
 
-void NFA_REPL();
-
-
-/**
- * Print the given NFA to System.out.
- */
-void NFA_print(NFA nfa);
-
-
 /*
  * Run the given NFA on the given input string, and return true if it accepts
  * the input, otherwise false.
@@ -213,53 +206,6 @@ void NFA_print(NFA nfa);
     // If any of them are accepting states, return true
     // If none of them are accepting states, return false
 
-    Set potentialNextStates;
-    Set_insert(potentialNextStates, 0);
-    SetIterator iter;
-    int symbol, curr;
-    bool truthValue = false;
-
-    // So first Iteration should get all the potential current states
-    // and store it into potentialNextStates
-    for(int i = 0; i < strlen(input); i++)
-    {
-        symbol = input[i];
-        iter = Set_iterator(potentialNextStates);
-
-        while (SetIterator_hasNext(iter)) // Pulls out the initial state the first time
-        {
-            curr = SetIterator_next(iter);
-            Set_union(potentialNextStates, NFA_get_transitions(nfa, curr, symbol));
-        }
-
-        // Free the current states
-        Set_free(nfa->currentStates);
-        // Set the current states to the potential next states
-        nfa->currentStates = potentialNextStates;
-
-        // Free the potential next states
-        Set_free(potentialNextStates);
-    }
-
-    // Free potentialNextStates after use
-    Set_free(potentialNextStates);
-
-    // If the current states is not empty, iterate through the current states
-    // and check if any of them are accepting states
-    iter = Set_iterator(nfa->currentStates);
-    while(SetIterator_hasNext(iter)){
-        curr = SetIterator_next(iter);
-        if(nfa->transitionMatrix[curr]==true){
-            truthValue = true;
-            break;
-        }
-    }
-
-    // Free the iterator
-    Set_free(iter);
-    Set_free(nfa->currentStates);
-    free(nfa);
-    return truthValue;
 
 }*/
 
